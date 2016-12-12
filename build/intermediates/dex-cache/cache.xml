@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_cdaab36bdd63cc454de24a7a93223c6e9f1ce4aa/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.0.1_89d820c2c13140cb787f6c9a33f79ba91bd369d3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_1313fbfbbf8c0b74f85f05efd64d5b4788db11a4/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.0.1_766630f2e1d93323c05b201b428c008fab7e3128/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_3f73656e047d65dcbe8d23068b90564ceca5525d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.0.1_7db0b76d298842464337866a5afabe9860cec6ed/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.0.1_7e3a28ea8f9a16045845aa0794755e678c73b504/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_74a5f9ff2138bc74c822a5951a0c5000f7286976/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.0.1_07f179465d3c3c753522e1f4724a1227cef4124a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.0.1_7e6a2370d4a8b1014aa1cf5e4077f290ca51617a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.0.1_9d094e08bd194b86ebd1a342d138acf29518a99a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.0.1_7acb6b6204e5bfe72655577c4786ce9c92845747/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.0.1_915960fe4e8e3cf2268d1e1e1eb5c746d287e8ba/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="68b1cf77e024c8136293a42c526e6bcb2ab600bf">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_c83713309da325f43c7d99039bc4dfcdf38efe47/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_2e7ffc637e1a844438a4d8634dac512c1f86d33d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a6bf600871831902696240785b4d8c1cba3cccf4">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_ea860f138e2b1d63de2ec71e763c564a355057b9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/fredrik/dev/Sudoku/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/home/fredrik/dev/Sudoku/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.0.1_614e3dc1d03924f8b3b0adbdea0acbe126ccaeba/classes.dex" />
+    </item>
+
+</items>
