@@ -23,7 +23,7 @@ public class SudokuSolver {
                 candidateSquares.add(null);
             }
             for (Square square : container) {
-                for (int mark : square.marks) {
+                for (int mark : square.marks.iterable()) {
                     candidates.set(mark, candidates.get(mark) + 1);
                     candidateSquares.set(mark, square);
                 }
@@ -59,7 +59,7 @@ public class SudokuSolver {
             rowCandidates.add(new SquareHolder(size));
         }
         for (Square square : container) {
-            for (int mark : square.marks) {
+            for (int mark : square.marks.iterable()) {
                 if (rowCandidates.get(mark).no_conflicts) {
                     rowCandidates.get(mark).insert(square);
                 }
@@ -98,7 +98,7 @@ public class SudokuSolver {
                     for (Square square2 : container) {
                         if (square2 == square || square2.marks.size() > i)
                             continue;
-                        for (int mark : square2.marks) {
+                        for (int mark : square2.marks.iterable()) {
                             if (!square.marks.contains(mark))
                                 continue outerLoop;
                         }

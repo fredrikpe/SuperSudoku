@@ -9,17 +9,21 @@ import java.io.InputStreamReader;
 
 class SudokuMain {
 
-    private Context context;
+    private MainActivity mainActivity;
 
     SudokuBoard sudokuBoard;
     SudokuMode sudokuMode;
+    SudokuAssistant sudokuAssistant;
     int selectedNumber;
     int highlightNumber;
 
-    SudokuMain(Context context) {
-        this.context = context;
+    boolean useAssistant = true;
+
+    SudokuMain(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
 
         sudokuBoard = new SudokuBoard();
+        sudokuAssistant = new SudokuAssistant(sudokuBoard);
 
         parseSudokuTxtFile();
 
@@ -28,7 +32,11 @@ class SudokuMain {
 
     void newGame() {
         sudokuBoard.getNewRandomSudoku();
-        SudokuAssistant.initiateMarks(sudokuBoard);
+        sudokuAssistant.interrupt();
+        sudokuAssistant = new SudokuAssistant(sudokuBoard);
+        sudokuAssistant.start();
+        sudokuBoard.changeOccured = true;
+        sudokuBoard.notifyChange();
     }
 
     void setNumber(int i, int j) {
@@ -46,7 +54,7 @@ class SudokuMain {
     }
 
     void parseSudokuTxtFile() {
-        InputStream is = context.getResources().openRawResource(R.raw.test_sudokus);
+        InputStream is = mainActivity.getResources().openRawResource(R.raw.test_sudokus);
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
 
         String line;

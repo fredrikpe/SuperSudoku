@@ -120,7 +120,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    sudokuMain.selectedNumber = Integer.parseInt(buttonView.getText().toString());
+                    int buttonNumber = Integer.parseInt(buttonView.getText().toString());
+                    sudokuMain.selectedNumber = sudokuMain.selectedNumber == buttonNumber ? 0 : buttonNumber;
                     for (ToggleButton tb : numberToggleButtons) {
                         if (tb != buttonView)
                             tb.setChecked(false);

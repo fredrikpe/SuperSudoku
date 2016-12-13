@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
@@ -11,12 +12,11 @@ import android.view.SurfaceView;
  * Created by fredrik on 11.12.16.
  */
 
-public class SudokuSurfaceView extends SurfaceView {
+public class SudokuSurfaceView extends SurfaceView implements SudokuBoard.SomeEventListener{
 
     int width, height, squareWidth, squareHeight;
     float markTextSize = 23;
     float fillTextSize = 100;
-    //Color highlightColor = Color.LTGRAY;
 
     Paint paint = new Paint();
 
@@ -28,6 +28,8 @@ public class SudokuSurfaceView extends SurfaceView {
 
         this.setBackgroundColor(Color.WHITE);
         this.getHolder().setFixedSize(100, 850);
+
+        sudokuMain.sudokuBoard.setSomeEventListener(this);
     }
 
     @Override
@@ -47,14 +49,14 @@ public class SudokuSurfaceView extends SurfaceView {
 
     private void drawFillsAndMarks(Canvas canvas) {
         int sx, sy, mx, my;
-        for (Square square : sudokuMain.sudokuBoard.squares) {
+        for (Square square : sudokuMain.sudokuBoard.getSquares()) {
             sx = square.i * squareWidth;
             sy = square.j * squareHeight;
             if (square.getFill() != 0) {
                 if (square.fixed) {
                     paint.setColor(Color.BLACK);
                 } else {
-                    paint.setColor(Color.BLUE);
+                    paint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
                 }
                 paint.setTextSize(fillTextSize);
                 sx = square.i * squareWidth + squareWidth / 4;
@@ -63,7 +65,7 @@ public class SudokuSurfaceView extends SurfaceView {
             } else {
                 paint.setColor(Color.BLACK);
                 paint.setTextSize(markTextSize);
-                for (int mark : square.marks) {
+                for (int mark : square.marks.iterable()) {
                     mx = sx + ((mark - 1) % 3) * squareWidth / 3 + 10;
                     my = sy + (mark - 1) / 3 * squareHeight / 3 + 25;
                     canvas.drawText(Integer.toString(mark), mx, my, paint);
@@ -94,9 +96,9 @@ public class SudokuSurfaceView extends SurfaceView {
         if (highlight == 0) {
             return;
         }
-        paint.setColor(Color.LTGRAY);
+        paint.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         paint.setStyle(Paint.Style.FILL);
-        for (Square square : sudokuMain.sudokuBoard.squares) {
+        for (Square square : sudokuMain.sudokuBoard.getSquares()) {
             if (square.getFill() == highlight || (square.getFill() == 0 && square.marks.contains(highlight))) {
                 int x = square.i * squareWidth;
                 int y = square.j * squareHeight;
@@ -121,5 +123,10 @@ public class SudokuSurfaceView extends SurfaceView {
         }
         invalidate();
         return true; //processed
+    }
+
+    @Override
+    public void onSomeEvent() {
+        invalidate();
     }
 }

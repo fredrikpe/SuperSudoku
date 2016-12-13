@@ -2,6 +2,7 @@ package com.example.fredrik.supersudoku;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -9,8 +10,9 @@ import java.util.List;
  */
 
 class Square {
-    List<Integer> marks;
     private int fill;  // int default is 0 in java
+
+    Marks marks;
 
     boolean fixed = false;
 
@@ -26,10 +28,10 @@ class Square {
         this.box_i = i / 3;
         this.box_j = j / 3;
 
-        marks = new PrivateArrayList<>();
+        marks = new Marks();
     }
 
-    boolean setFill(int fill) {
+    synchronized boolean setFill(int fill) {
         if (!fixed) {
             if (this.fill != fill) {
                 this.fill = fill;
@@ -39,64 +41,69 @@ class Square {
         return false;
     }
 
-    int getFill() {
+    synchronized int getFill() {
         return fill;
     }
 
-    private class PrivateArrayList<E> extends ArrayList<E> {
 
-        PrivateArrayList() { super(); }
+    class Marks {
 
-        @Override
-        public E get(int index) {
-            return super.get(index);
+        List<Integer> marks;
+        List<Integer> userRemovedMarks;
+
+        Iterator<Integer> marksIterator;
+        Iterator<Integer> userRemovedMarksIterator;
+
+        Marks() {
+            marks = new ArrayList<>();
+            userRemovedMarks = new ArrayList<>();
+            marksIterator = marks.iterator();
+            userRemovedMarksIterator = userRemovedMarks.iterator();
         }
 
-        @Override
-        public E set(int index, E element) {
-            if (!fixed) {
-                return super.set(index, element);
-            }
-            return null;
+        synchronized int size() {
+            return marks.size();
         }
 
-        @Override
-        public boolean add(E e) {
+        synchronized boolean contains(Integer i) {
+            return marks.contains(i);
+        }
+
+        synchronized Integer get(int index) {
+            return marks.get(index);
+        }
+
+        synchronized public boolean add(Integer e) {
+            return !fixed && !userRemovedMarks.contains(e) && marks.add(e);
+        }
+
+//        synchronized public boolean addAll(Collection<? extends Integer> collection) {
+//            return !fixed && marks.addAll(collection);
+//        }
+
+//        synchronized Integer remove(int index) {
+//            if (!fixed) {
+//                Integer i = marks.remove(index);
+//                if (i != null) {
+//                    userRemovedMarks.add(i);
+//                    return i;
+//                }
+//            }
+//            return null;
+//        }
+
+        synchronized boolean remove(Integer i) {
             if (!fixed) {
-                return super.add(e);
+                if (marks.remove(i)) {
+                    userRemovedMarks.add(i);
+                    return true;
+                }
             }
             return false;
         }
 
-        @Override
-        public void add(int index, E element) {
-            if (!fixed) {
-                super.add(element);
-            }
-        }
-
-        @Override
-        public E remove(int index) {
-            if (!fixed) {
-                return super.remove(index);
-            }
-            return null;
-        }
-
-        @Override
-        public boolean remove(Object e) {
-            if (!fixed) {
-                return super.remove(e);
-            }
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> list) {
-            if (!fixed) {
-                return super.removeAll(list);
-            }
-            return false;
+        synchronized Iterable<Integer> iterable() {
+            return marks;
         }
     }
 }

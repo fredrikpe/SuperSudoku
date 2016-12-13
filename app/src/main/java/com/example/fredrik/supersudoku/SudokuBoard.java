@@ -10,7 +10,7 @@ import java.util.List;
 
 class SudokuBoard {
 
-    List<Square> squares;
+    private List<Square> squares;
     private List<Square> representativeSquares;
 
     private TwoSquareInterface sameRowOperator = (s, t) -> s.i == t.i;
@@ -18,6 +18,14 @@ class SudokuBoard {
     private TwoSquareInterface sameBoxOperator = (s, t) -> s.box_i == t.box_i && s.box_j == t.box_j;
 
     List<String> stringSudokus;
+
+    final Object changeMonitor = new Object();
+    boolean changeOccured;
+    private SomeEventListener listener;
+
+    public void setSomeEventListener (SomeEventListener listener) {
+        this.listener = listener;
+    }
 
     SudokuBoard() {
         squares = new ArrayList<>();
@@ -38,27 +46,46 @@ class SudokuBoard {
         return s;
     }
 
-    void setMark(int x, int y, int selectedNumber) {
+    synchronized List<Square> getSquares() {
+        return squares;
+    }
+
+    synchronized void setMark(int x, int y, int selectedNumber) {
         Square square = getSquare(x, y);
         if (square.marks.contains(selectedNumber)) {
-            square.marks.remove(Integer.valueOf(selectedNumber));
+            System.out.println("removing");
+            changeOccured = square.marks.remove(Integer.valueOf(selectedNumber));
         } else {
-            square.marks.add(selectedNumber);
+            changeOccured = square.marks.add(selectedNumber);
+        }
+        notifyChange();
+    }
+
+    synchronized boolean setFill(int x, int y, int selectedNumber) {
+        Square square = getSquare(x, y);
+        boolean changeOccured = square.setFill(selectedNumber);
+        notifyChange();
+        return changeOccured;
+    }
+
+    void notifyChange() {
+        if (changeOccured) {
+            if (listener != null) listener.onSomeEvent();
+        }
+        synchronized (changeMonitor) {
+            changeMonitor.notifyAll();
         }
     }
 
-    void setFill(int x, int y, int selectedNumber) {
-        Square square = getSquare(x, y);
-        if (square.setFill(selectedNumber)) {
-            SudokuAssistant.updateMarks(this);
-        }
+    interface SomeEventListener {
+        void onSomeEvent ();
     }
 
     interface TwoSquareInterface {
         boolean operator(Square s, Square t);
     }
 
-    private List<Square> getContainer(Square s, TwoSquareInterface op) {
+    synchronized private List<Square> getContainer(Square s, TwoSquareInterface op) {
         List<Square> container = new ArrayList<>();
         for (Square t : squares) {
             if (op.operator(s, t)) {
