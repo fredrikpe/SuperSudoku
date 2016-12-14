@@ -49,11 +49,11 @@ public class SudokuSurfaceView extends SurfaceView implements SudokuBoard.SomeEv
 
     private void drawFillsAndMarks(Canvas canvas) {
         int sx, sy, mx, my;
-        for (Square square : sudokuMain.sudokuBoard.getSquares()) {
+        for (Square square : sudokuMain.sudokuBoard.squareMap.values()) {
             sx = square.i * squareWidth;
             sy = square.j * squareHeight;
-            if (square.getFill() != 0) {
-                if (square.fixed) {
+            if (square.fill != 0) {
+                if (!square.editable) {
                     paint.setColor(Color.BLACK);
                 } else {
                     paint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
@@ -61,11 +61,11 @@ public class SudokuSurfaceView extends SurfaceView implements SudokuBoard.SomeEv
                 paint.setTextSize(fillTextSize);
                 sx = square.i * squareWidth + squareWidth / 4;
                 sy = (square.j + 1) * squareHeight - 10;
-                canvas.drawText(Integer.toString(square.getFill()), sx, sy, paint);
+                canvas.drawText(Integer.toString(square.fill), sx, sy, paint);
             } else {
                 paint.setColor(Color.BLACK);
                 paint.setTextSize(markTextSize);
-                for (int mark : square.marks.iterable()) {
+                for (int mark : square.marks) {
                     mx = sx + ((mark - 1) % 3) * squareWidth / 3 + 10;
                     my = sy + (mark - 1) / 3 * squareHeight / 3 + 25;
                     canvas.drawText(Integer.toString(mark), mx, my, paint);
@@ -98,8 +98,8 @@ public class SudokuSurfaceView extends SurfaceView implements SudokuBoard.SomeEv
         }
         paint.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         paint.setStyle(Paint.Style.FILL);
-        for (Square square : sudokuMain.sudokuBoard.getSquares()) {
-            if (square.getFill() == highlight || (square.getFill() == 0 && square.marks.contains(highlight))) {
+        for (Square square : sudokuMain.sudokuBoard.squareMap.values()) {
+            if (square.fill == highlight || (square.fill == 0 && square.containsMark(highlight))) {
                 int x = square.i * squareWidth;
                 int y = square.j * squareHeight;
                 canvas.drawRect(x, y, x + squareWidth, y + squareHeight, paint);

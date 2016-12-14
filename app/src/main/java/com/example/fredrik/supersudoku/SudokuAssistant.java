@@ -9,7 +9,7 @@ import java.util.List;
  * Created by fredrik on 12.12.16.
  */
 
-class SudokuAssistant implements Runnable {
+class SudokuAssistant implements Runnable{
 
     private Thread thread;
     String threadName;
@@ -57,15 +57,13 @@ class SudokuAssistant implements Runnable {
     }
 
     boolean singleCandidate() {
-        for (Square square : sudokuBoard.getSquares()) {
-            if (square.marks.size() == 1 && square.getFill() == 0) {
-                if (square.setFill(square.marks.get(0))) {
-                    System.out.println("succsefully changed square");
-                } else {
-                    System.out.println("square was fixed");
+        for (Square square : sudokuBoard.squareMap.values()) {
+            if (square.marks.length == 1 && square.fill == 0) {
+                if (!square.editable) {
+                    System.out.println("Error. Not editable and fill == 0");
                 }
-                // Do something to square.marks?
-                System.out.println(square.marks.get(0));
+                sudokuBoard.setFill(SudokuBoard.key(square.i, square.j), square.marks[0]);
+                System.out.println("Found single candidate " + square.marks[0] + " at " + square.i + ", " + square.j);
                 return true;
             }
         }
@@ -73,11 +71,13 @@ class SudokuAssistant implements Runnable {
     }
 
     void updateMarks() {
-        System.out.println("Updating marks");
-        for (Square square : sudokuBoard.getSquares()) {
-            for(Integer mark : getValidMarks(square)) {
-                if (!square.marks.contains(mark)) {
-                    square.marks.add(mark);
+        for (Square square : sudokuBoard.squareMap.values()) {
+            if (square.editable) {
+                Integer key = SudokuBoard.key(square.i, square.j);
+                for (Integer mark : getValidMarks(key)) {
+                    if (!square.containsMark(mark)) {
+                        sudokuBoard.setMark(key, mark);
+                    }
                 }
             }
         }
@@ -89,27 +89,29 @@ class SudokuAssistant implements Runnable {
 //        }
 //    }
 
-    private List<Integer> getValidMarks(Square square) {
+    private List<Integer> getValidMarks(Integer key) {
         List<Integer> validMarks = new ArrayList<>();
         validMarks.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
-        if (sudokuBoard.getConnectedSquares(square).size() != 21) System.out.println("CS != 21, CS = " + sudokuBoard.getConnectedSquares(square).size());
-        for(Square s : sudokuBoard.getConnectedSquares(square)) {
-            int fill = s.getFill();
-            if (s != square && fill != 0) {
-                validMarks.remove(Integer.valueOf(s.getFill()));
+        if (sudokuBoard.getConnectedSquares(key).size() != 24) System.out.println("CS != 24, CS = " + sudokuBoard.getConnectedSquares(key).size());
+        for(Integer k : sudokuBoard.getConnectedSquares(key)) {
+            if (!k.equals(key)) {
+                int fill = sudokuBoard.squareMap.get(k).fill;
+                if (fill != 0) {
+                    validMarks.remove(Integer.valueOf(fill));
+                }
             }
         }
         return validMarks;
     }
 
-    private static List<Integer> getInvalidMarks(Square square, SudokuBoard board) {
-        List<Integer> invalidMarks = new ArrayList<>();
-
-        for(Square s : board.getConnectedSquares(square)) {
-            if (s != square && s.getFill() != 0) {
-                invalidMarks.add(s.getFill());
-            }
-        }
-        return invalidMarks;
-    }
+//    private static List<Integer> getInvalidMarks(Square square, SudokuBoard board) {
+//        List<Integer> invalidMarks = new ArrayList<>();
+//
+//        for(Square s : board.getConnectedSquares(square)) {
+//            if (s != square && s.getFill() != 0) {
+//                invalidMarks.add(s.getFill());
+//            }
+//        }
+//        return invalidMarks;
+//    }
 }

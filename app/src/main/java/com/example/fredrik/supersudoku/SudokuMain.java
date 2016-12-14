@@ -31,7 +31,11 @@ class SudokuMain {
     }
 
     void newGame() {
-        sudokuBoard.getNewRandomSudoku();
+        try {
+            sudokuBoard.getNewRandomSudoku();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         sudokuAssistant.interrupt();
         sudokuAssistant = new SudokuAssistant(sudokuBoard);
         sudokuAssistant.start();
@@ -43,10 +47,10 @@ class SudokuMain {
         if (selectedNumber != 0) {
             switch (sudokuMode) {
                 case FILL:
-                    sudokuBoard.setFill(i, j, selectedNumber);
+                    sudokuBoard.setFill(SudokuBoard.key(i, j), selectedNumber);
                     break;
                 case MARK:
-                    sudokuBoard.setMark(i, j, selectedNumber);
+                    sudokuBoard.setMark(SudokuBoard.key(i, j), selectedNumber);
                     break;
                 default:
             }
