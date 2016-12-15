@@ -22,11 +22,10 @@ class SudokuBoard {
 
     List<String> stringSudokus;
 
-    final Object changeMonitor = new Object();
-    boolean changeOccured;
+
     private SomeEventListener listener;
 
-    public void setSomeEventListener (SomeEventListener listener) {
+    public void setSomeEventListener(SomeEventListener listener) {
         this.listener = listener;
     }
 
@@ -42,7 +41,7 @@ class SudokuBoard {
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                squareMap.put(key(i, j), new Square(i, j, 0, new int[] {}, true));
+                squareMap.put(key(i, j), new Square(i, j, 0, new int[] {}, new int[] {},true));
             }
             representativeKeys.add(key(i, i/3 + (i%3)*3));
         }
@@ -52,41 +51,39 @@ class SudokuBoard {
         return squareMap.get(key(i, j));
     }
 
-    synchronized void setMark(Integer key, int mark) {
+    private void setMark(Integer key, int mark, boolean fromUser) {
         Square square = squareMap.get(key);
         if (square.editable) {
-            if (square.containsMark(mark)) {
-                int[] newMarks = removeMark(square.marks, mark);
-                squareMap.put(key, new Square(square.i, square.j, square.fill, newMarks, true));
-            } else {
-                int[] newMarks = addMark(square.marks, mark);
-                squareMap.put(key, new Square(square.i, square.j, square.fill, newMarks, true));
+            int[] newUserRemovedMarks = square.userRemovedMarks;
+            if (fromUser) {
+                newUserRemovedMarks = addRemoveUserRemovedMark(square, mark);
             }
-            changeOccured = true;
-        } else {
-            changeOccured = false;
+            int[] newMarks = addRemoveMark(square, mark);
+            squareMap.put(key, new Square(square.i, square.j, square.fill, newMarks, newUserRemovedMarks, true));
         }
-        notifyChange();
     }
 
-    synchronized void setFill(Integer key, int fill) {
+    void setFill(Integer key, int fill) {
         Square square = squareMap.get(key);
         if (square.editable) {
-            squareMap.put(key, new Square(square.i, square.j, fill, square.marks, true));
-            changeOccured = true;
-        } else {
-            changeOccured = false;
+            squareMap.put(key, new Square(square.i, square.j, fill, square.marks, square.userRemovedMarks, true));
         }
-        notifyChange();
     }
 
-    void notifyChange() {
-        if (changeOccured) {
-            if (listener != null) listener.onSomeEvent();
+    void setMarkFromUser(Integer key, int mark) { setMark(key, mark, true); }
+
+    void setMarkFromAssistant(Integer key, int mark) { setMark(key, mark, false); }
+
+    void changeOccurred() {
+        new SudokuAssistantTask().execute(this);
+    }
+
+    void assistantFinished(Boolean result) {
+        if (listener != null) {
+            listener.onSomeEvent();
         }
-        // TODO: Move into if statement above
-        synchronized (changeMonitor) {
-            changeMonitor.notifyAll();
+        if (result) {
+            new SudokuAssistantTask().execute(this);
         }
     }
 
@@ -189,9 +186,26 @@ class SudokuBoard {
             squareMap.clear();
             for (int i = 0; i < 81; i++) {
                 int fill = Character.getNumericValue(sudokuString.charAt(i));
-                squareMap.put(Integer.valueOf(i), new Square(rowIndex(i), columnIndex(i), fill, new int[] {}, fill == 0));
+                squareMap.put(Integer.valueOf(i), new Square(rowIndex(i), columnIndex(i), fill, new int[] {}, new int[] {}, fill == 0));
             }
         }
+    }
+
+    private int[] addRemoveMark(Square square, int mark) {
+        for (int m : square.marks) {
+            if (m == mark) return removeMark(square.marks, mark);
+        }
+        if (!square.containsUserRemovedMark(mark)) {
+            return addMark(square.marks, mark);
+        }
+        return square.marks;
+    }
+
+    private int[] addRemoveUserRemovedMark(Square square, int mark) {
+        for (int m : square.userRemovedMarks) {
+            if (m == mark) return removeMark(square.userRemovedMarks, mark);
+        }
+        return addMark(square.userRemovedMarks, mark);
     }
 
     private int[] removeMark(int[] marks, int mark) {

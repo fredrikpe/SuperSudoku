@@ -1,8 +1,6 @@
 package com.example.fredrik.supersudoku;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,16 +15,13 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     LinearLayout mainLayout;
     SudokuSurfaceView sudokuSurfaceView;
+
+    Button newGameButton;
 
     ToggleButton fillToggleButton;
     ToggleButton markToggleButton;
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         sudokuSurfaceView = new SudokuSurfaceView(this);
         mainLayout.addView(sudokuSurfaceView, 0);
 
-        initToggleButtons();
+        initButtons();
         setDefaultViewState();
 
         sudokuMain.newGame();
@@ -79,7 +74,15 @@ public class MainActivity extends AppCompatActivity
         fillToggleButton.setChecked(true);
     }
 
-    private void initToggleButtons() {
+    private void initButtons() {
+        newGameButton = (Button) findViewById(R.id.newGameButton);
+        newGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sudokuMain.newGame();
+            }
+        });
+
         fillToggleButton = (ToggleButton) findViewById(R.id.fillToggleButton);
         markToggleButton = (ToggleButton) findViewById(R.id.markToggleButton);
 

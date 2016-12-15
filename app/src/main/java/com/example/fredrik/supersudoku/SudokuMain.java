@@ -1,7 +1,5 @@
 package com.example.fredrik.supersudoku;
 
-import android.content.Context;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +11,6 @@ class SudokuMain {
 
     SudokuBoard sudokuBoard;
     SudokuMode sudokuMode;
-    SudokuAssistant sudokuAssistant;
     int selectedNumber;
     int highlightNumber;
 
@@ -23,7 +20,6 @@ class SudokuMain {
         this.mainActivity = mainActivity;
 
         sudokuBoard = new SudokuBoard();
-        sudokuAssistant = new SudokuAssistant(sudokuBoard);
 
         parseSudokuTxtFile();
 
@@ -36,11 +32,7 @@ class SudokuMain {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        sudokuAssistant.interrupt();
-        sudokuAssistant = new SudokuAssistant(sudokuBoard);
-        sudokuAssistant.start();
-        sudokuBoard.changeOccured = true;
-        sudokuBoard.notifyChange();
+        sudokuBoard.changeOccurred();
     }
 
     void setNumber(int i, int j) {
@@ -50,15 +42,16 @@ class SudokuMain {
                     sudokuBoard.setFill(SudokuBoard.key(i, j), selectedNumber);
                     break;
                 case MARK:
-                    sudokuBoard.setMark(SudokuBoard.key(i, j), selectedNumber);
+                    sudokuBoard.setMarkFromUser(SudokuBoard.key(i, j), selectedNumber);
                     break;
                 default:
             }
+            sudokuBoard.changeOccurred();
         }
     }
 
     void parseSudokuTxtFile() {
-        InputStream is = mainActivity.getResources().openRawResource(R.raw.test_sudokus);
+        InputStream is = mainActivity.getResources().openRawResource(R.raw.hard_sudokus);
         BufferedReader in = new BufferedReader(new InputStreamReader(is));
 
         String line;
