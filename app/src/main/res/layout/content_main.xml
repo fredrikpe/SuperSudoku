@@ -33,10 +33,10 @@
                 android:textOn="Fill" />
 
             <ToggleButton
-                android:text="Mark"
+                android:text="Candidate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/markToggleButton"
+                android:id="@+id/candidateToggleButton"
                 android:layout_weight="1"
                 android:textOff="Mark"
                 android:textOn="Mark" />

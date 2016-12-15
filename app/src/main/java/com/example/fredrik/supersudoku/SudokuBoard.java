@@ -1,7 +1,7 @@
 package com.example.fredrik.supersudoku;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -13,6 +13,10 @@ import java.util.concurrent.ConcurrentMap;
 class SudokuBoard {
 
     ConcurrentMap<Integer, Square> squareMap;
+
+    final SudokuContainer[] rowContainers;
+    final SudokuContainer[] columnContainers;
+    final SudokuContainer[] boxContainers;
 
     List<Integer> representativeKeys;
 
@@ -29,17 +33,18 @@ class SudokuBoard {
         this.listener = listener;
     }
 
-    static Integer key(int i, int j) { return i * 9 + j; }
-    static Integer rowIndex(Integer key) { return key / 9; }
-    static Integer columnIndex(Integer key) { return key % 9; }
-
     SudokuBoard() {
         squareMap = new ConcurrentHashMap<>();
         representativeKeys = new ArrayList<>();
 
         stringSudokus = new ArrayList<>();
 
+        rowContainers = new SudokuContainer[9];
+        columnContainers = new SudokuContainer[9];
+        boxContainers = new SudokuContainer[9];
+
         for (int i = 0; i < 9; i++) {
+            rowContainers[i] = new SudokuContainer(ContainerType.ROW, new Integer[] {});
             for (int j = 0; j < 9; j++) {
                 squareMap.put(key(i, j), new Square(i, j, 0, new int[] {}, new int[] {},true));
             }
@@ -47,37 +52,69 @@ class SudokuBoard {
         }
     }
 
-    Square getSquare(int i, int j) {
-        return squareMap.get(key(i, j));
-    }
+    /**
+     * Adds or removes a candidate from a given square (if allowed). User removed
+     * candidates are saved.
+     *
+     * @param key       key of the square
+     * @param candidate the candidate to add/remove
+     */
+    void setCandidateFromUser(Integer key, int candidate) { setCandidate(key, candidate, true); }
 
-    private void setMark(Integer key, int mark, boolean fromUser) {
-        Square square = squareMap.get(key);
-        if (square.editable) {
-            int[] newUserRemovedMarks = square.userRemovedMarks;
-            if (fromUser) {
-                newUserRemovedMarks = addRemoveUserRemovedMark(square, mark);
-            }
-            int[] newMarks = addRemoveMark(square, mark);
-            squareMap.put(key, new Square(square.i, square.j, square.fill, newMarks, newUserRemovedMarks, true));
-        }
-    }
+    /**
+     * Adds or removes a candidate from a given square (if allowed).
+     *
+     * @param key       key of the square
+     * @param candidate the candidate to add/remove
+     */
+    void setCandidateFromAssistant(Integer key, int candidate) { setCandidate(key, candidate, false); }
 
+    /**
+     * Sets or unsets a number in a square.
+     *
+     * @param key   key of the square
+     * @param fill  the number to fill
+     */
     void setFill(Integer key, int fill) {
         Square square = squareMap.get(key);
         if (square.editable) {
-            squareMap.put(key, new Square(square.i, square.j, fill, square.marks, square.userRemovedMarks, true));
+            squareMap.put(key, new Square(square.i, square.j, fill, square.candidates, square.userRemovedCandidates, true));
         }
     }
 
-    void setMarkFromUser(Integer key, int mark) { setMark(key, mark, true); }
-
-    void setMarkFromAssistant(Integer key, int mark) { setMark(key, mark, false); }
-
+    /**
+     * Called when a change to the board state by the user happens. Initiates the assistant task.
+     */
     void changeOccurred() {
         new SudokuAssistantTask().execute(this);
     }
 
+    /**
+     * Translates i, j coordinates to a key.
+     *
+     * @param i row number
+     * @param j column number
+     * @return  a key to the squareMap
+     */
+    static Integer key(int i, int j) { return i * 9 + j; }
+
+    private void setCandidate(Integer key, int candidate, boolean fromUser) {
+        Square square = squareMap.get(key);
+        if (square.editable) {
+            int[] newUserRemovedCandidates = square.userRemovedCandidates;
+            if (fromUser) {
+                newUserRemovedCandidates = addRemoveUserRemovedCandidates(square, candidate);
+            }
+            int[] newCandidates = addRemoveCandidates(square, candidate);
+            squareMap.put(key, new Square(square.i, square.j, square.fill, newCandidates, newUserRemovedCandidates, true));
+        }
+    }
+
+    /**
+     * Called by the assistant task when it finishes.
+     *
+     * @param result    true if assistant made changes to the board.
+     */
     void assistantFinished(Boolean result) {
         if (listener != null) {
             listener.onSomeEvent();
@@ -95,8 +132,8 @@ class SudokuBoard {
         boolean operator(Integer k, Integer l);
     }
 
-    private List<Integer> getContainer(Integer key, TwoKeyInterface op, String name) {
-        List<Integer> container = new ArrayList<>();
+    private Integer[] getContainer(Integer key, TwoKeyInterface op, String name) {
+        Integer[] container = new ArrayList<>();
         for (ConcurrentMap.Entry<Integer, Square> entry : squareMap.entrySet()) {
             if (op.operator(key, entry.getKey())) {
                 // System.out.println("Key " + key + " and " + entry.getKey() + " are on the same " + name);
@@ -106,36 +143,36 @@ class SudokuBoard {
         return container;
     }
 
-    List<Integer> getRow(Integer key) {
+    Integer[] getRow(Integer key) {
         return getContainer(key, sameRowOperator, "row");
     }
 
-    List<Integer> getColumn(Integer key) {
+    Integer[] getColumn(Integer key) {
         return getContainer(key, sameColumnOperator, "column");
     }
 
-    List<Integer> getBox(Integer key) {
+    Integer[] getBox(Integer key) {
         return getContainer(key, sameBoxOperator, "box");
     }
 
-    List<Integer> getRows(List<Integer> keys) {
-        List<Integer> rows = new ArrayList<>();
+    Integer[] getRows(Integer[] keys) {
+        Integer[] rows = new ArrayList<>();
         for (Integer key : keys) {
             rows.addAll(getColumn(key));
         }
         return rows;
     }
 
-    List<Integer> getColumns(List<Integer> keys) {
-        List<Integer> columns = new ArrayList<>();
+    Integer[] getColumns(Integer[] keys) {
+        Integer[] columns = new ArrayList<>();
         for (Integer key : keys) {
             columns.addAll(getColumn(key));
         }
         return columns;
     }
 
-    List<List<Integer>> getContainers() {
-        List<List<Integer>> containers = new ArrayList<>();
+    List<Integer[]> getContainers() {
+        List<Integer[]> containers = new ArrayList<>();
         for (Integer key : representativeKeys) {
             containers.add(getRow(key));
             containers.add(getColumn(key));
@@ -144,18 +181,18 @@ class SudokuBoard {
         return containers;
     }
 
-    List<List<Integer>> getBoxContainers() {
-        List<List<Integer>> boxContainers = new ArrayList<>();
+    List<Integer[]> getBoxContainers() {
+        List<Integer[]> boxContainers = new ArrayList<>();
         for (Integer key : representativeKeys) {
             boxContainers.add(getBox(key));
         }
         return boxContainers;
     }
 
-    List<List<Integer>> getBoxPairContainers() {
-        List<List<Integer>> boxPairContainers = new ArrayList<>();
-        for (List<Integer> box1 : getBoxContainers()) {
-            for (List<Integer> box2 : getBoxContainers()) {
+    List<Integer[]> getBoxPairContainers() {
+        List<Integer[]> boxPairContainers = new ArrayList<>();
+        for (Integer[] box1 : getBoxContainers()) {
+            for (Integer[] box2 : getBoxContainers()) {
                 if (box1 != box2) {
                     if (rowIndex(box1.get(0)) / 3 == rowIndex(box1.get(0)) / 3
                             || columnIndex(box1.get(0)) / 3 == columnIndex(box1.get(0)) / 3) {
@@ -168,11 +205,11 @@ class SudokuBoard {
         return boxPairContainers;
     }
 
-    List<Integer> getConnectedSquares(Integer key) {
-        List<Integer> connectedSquares = getRow(key);
+    Integer[] getConnectedSquares(Integer key) {
+        Integer[] connectedSquares = getRow(key);
         connectedSquares.addAll(getColumn(key));
         connectedSquares.addAll(getBox(key));
-        connectedSquares.removeAll(Arrays.asList(key));
+        connectedSquares.removeAll(Collections.singletonList(key));
         return connectedSquares;
     }
 
@@ -191,42 +228,45 @@ class SudokuBoard {
         }
     }
 
-    private int[] addRemoveMark(Square square, int mark) {
-        for (int m : square.marks) {
-            if (m == mark) return removeMark(square.marks, mark);
+    private static Integer rowIndex(Integer key) { return key / 9; }
+    private static Integer columnIndex(Integer key) { return key % 9; }
+
+    private int[] addRemoveCandidates(Square square, int candidate) {
+        for (int m : square.candidates) {
+            if (m == candidate) return removeCandidate(square.candidates, candidate);
         }
-        if (!square.containsUserRemovedMark(mark)) {
-            return addMark(square.marks, mark);
+        if (!square.userRemovedCandidatesContains(candidate)) {
+            return addCandidate(square.candidates, candidate);
         }
-        return square.marks;
+        return square.candidates;
     }
 
-    private int[] addRemoveUserRemovedMark(Square square, int mark) {
-        for (int m : square.userRemovedMarks) {
-            if (m == mark) return removeMark(square.userRemovedMarks, mark);
+    private int[] addRemoveUserRemovedCandidates(Square square, int candidates) {
+        for (int m : square.userRemovedCandidates) {
+            if (m == candidates) return removeCandidate(square.userRemovedCandidates, candidates);
         }
-        return addMark(square.userRemovedMarks, mark);
+        return addCandidate(square.userRemovedCandidates, candidates);
     }
 
-    private int[] removeMark(int[] marks, int mark) {
-        int[] newMarks = new int[marks.length - 1];
+    private int[] removeCandidate(int[] candidates, int candidate) {
+        int[] newCandidates = new int[candidates.length - 1];
         int i = 0;
-        for (int m : marks) {
-            if (m != mark) {
-                newMarks[i++] = m;
+        for (int m : candidates) {
+            if (m != candidate) {
+                newCandidates[i++] = m;
             }
         }
-        return newMarks;
+        return newCandidates;
     }
 
-    private int[] addMark(int[] marks, int mark) {
-        int[] newMarks = new int[marks.length + 1];
+    private int[] addCandidate(int[] candidates, int candidate) {
+        int[] newCandidates = new int[candidates.length + 1];
         int i = 0;
-        for (int m : marks) {
-            newMarks[i++] = m;
+        for (int m : candidates) {
+            newCandidates[i++] = m;
         }
-        newMarks[i] = mark;
-        return newMarks;
+        newCandidates[i] = candidate;
+        return newCandidates;
     }
 }
 

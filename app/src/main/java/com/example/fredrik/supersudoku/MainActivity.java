@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
     Button newGameButton;
 
     ToggleButton fillToggleButton;
-    ToggleButton markToggleButton;
+    ToggleButton candidateToggleButton;
     ToggleButton[] modeToggleButtons;
 
     ToggleButton toggleButton1;
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         fillToggleButton = (ToggleButton) findViewById(R.id.fillToggleButton);
-        markToggleButton = (ToggleButton) findViewById(R.id.markToggleButton);
+        candidateToggleButton = (ToggleButton) findViewById(R.id.candidateToggleButton);
 
         toggleButton1 = (ToggleButton) findViewById(R.id.toggleButton1);
         toggleButton2 = (ToggleButton) findViewById(R.id.toggleButton2);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         toggleButton8 = (ToggleButton) findViewById(R.id.toggleButton8);
         toggleButton9 = (ToggleButton) findViewById(R.id.toggleButton9);
 
-        modeToggleButtons = new ToggleButton[]{fillToggleButton, markToggleButton};
+        modeToggleButtons = new ToggleButton[]{fillToggleButton, candidateToggleButton};
         numberToggleButtons = new ToggleButton[]{toggleButton1, toggleButton2,
                 toggleButton3, toggleButton4, toggleButton5, toggleButton6, toggleButton7,
                 toggleButton8, toggleButton9};

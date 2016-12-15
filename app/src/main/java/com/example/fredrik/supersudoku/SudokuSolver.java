@@ -23,7 +23,7 @@ public class SudokuSolver {
 //                candidateSquares.add(null);
 //            }
 //            for (Square square : container) {
-//                for (int mark : square.marks.iterable()) {
+//                for (int mark : square.candidates.iterable()) {
 //                    candidates.set(mark, candidates.get(mark) + 1);
 //                    candidateSquares.set(mark, square);
 //                }
@@ -59,7 +59,7 @@ public class SudokuSolver {
 //            rowCandidates.add(new SquareHolder(size));
 //        }
 //        for (Square square : container) {
-//            for (int mark : square.marks) {
+//            for (int mark : square.candidates) {
 //                if (rowCandidates.get(mark).no_conflicts) {
 //                    rowCandidates.get(mark).insert(square);
 //                }
@@ -83,7 +83,7 @@ public class SudokuSolver {
 //            container.removeAll(excluding);
 //        }
 //        for (Square square : container) {
-//            square.marks.remove(candidate);
+//            square.candidates.remove(candidate);
 //        }
 //    }
 //
@@ -93,13 +93,13 @@ public class SudokuSolver {
 //                // Checks for naked subset in increasing order. A subset of eight implies a unique candidate.
 //                outerLoop:
 //                for (Square square : container) {
-//                    if (square.marks.size() > i)
+//                    if (square.candidates.size() > i)
 //                        continue;
 //                    for (Square square2 : container) {
-//                        if (square2 == square || square2.marks.size() > i)
+//                        if (square2 == square || square2.candidates.size() > i)
 //                            continue;
-//                        for (int mark : square2.marks.iterable()) {
-//                            if (!square.marks.contains(mark))
+//                        for (int mark : square2.candidates.iterable()) {
+//                            if (!square.candidates.contains(mark))
 //                                continue outerLoop;
 //                        }
 //                    }

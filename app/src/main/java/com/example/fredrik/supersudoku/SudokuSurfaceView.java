@@ -65,7 +65,7 @@ public class SudokuSurfaceView extends SurfaceView implements SudokuBoard.SomeEv
             } else {
                 paint.setColor(Color.BLACK);
                 paint.setTextSize(markTextSize);
-                for (int mark : square.marks) {
+                for (int mark : square.candidates) {
                     mx = sx + ((mark - 1) % 3) * squareWidth / 3 + 10;
                     my = sy + (mark - 1) / 3 * squareHeight / 3 + 25;
                     canvas.drawText(Integer.toString(mark), mx, my, paint);
@@ -99,7 +99,7 @@ public class SudokuSurfaceView extends SurfaceView implements SudokuBoard.SomeEv
         paint.setColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
         paint.setStyle(Paint.Style.FILL);
         for (Square square : sudokuMain.sudokuBoard.squareMap.values()) {
-            if (square.fill == highlight || (square.fill == 0 && square.containsMark(highlight))) {
+            if (square.fill == highlight || (square.fill == 0 && square.candidatesContains(highlight))) {
                 int x = square.i * squareWidth;
                 int y = square.j * squareHeight;
                 canvas.drawRect(x, y, x + squareWidth, y + squareHeight, paint);

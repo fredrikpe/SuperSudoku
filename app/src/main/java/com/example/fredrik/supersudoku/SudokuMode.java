@@ -3,14 +3,14 @@ package com.example.fredrik.supersudoku;
 enum SudokuMode {
     NONE,
     FILL,
-    MARK;
+    CANDIDATE;
 
     static SudokuMode parseText(String text) {
         switch (text) {
             case "Fill":
                 return FILL;
-            case "Mark":
-                return MARK;
+            case "Candidate":
+                return CANDIDATE;
             default:
                 throw new IllegalArgumentException("Illegal mode. Wrong button text?");
         }

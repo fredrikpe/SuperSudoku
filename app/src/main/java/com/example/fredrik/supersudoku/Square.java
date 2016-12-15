@@ -10,23 +10,23 @@ final class Square {
     final int i;
     final int j;
 
-    final int[] marks;
-    final int[] userRemovedMarks;
+    final int[] candidates;
+    final int[] userRemovedCandidates;
 
     final boolean editable;
 
-    Square(int i, int j, int fill, int[] marks, int[] userRemovedMarks, boolean fixed) {
+    Square(int i, int j, int fill, int[] marks, int[] userRemovedMarks, boolean editable) {
         this.i = i;
         this.j = j;
         this.fill = fill;
-        this.marks = marks;
-        this.userRemovedMarks = userRemovedMarks;
-        this.editable = fixed;
+        this.candidates = marks;
+        this.userRemovedCandidates = userRemovedMarks;
+        this.editable = editable;
     }
 
-    boolean containsMark(int mark) { return contains(marks, mark); }
+    boolean candidatesContains(int mark) { return contains(candidates, mark); }
 
-    boolean containsUserRemovedMark(int mark) { return contains(userRemovedMarks, mark); }
+    boolean userRemovedCandidatesContains(int mark) { return contains(userRemovedCandidates, mark); }
 
     private boolean contains(int[] ms, int m) {
         for (int i : ms) {

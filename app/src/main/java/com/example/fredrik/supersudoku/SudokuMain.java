@@ -38,11 +38,13 @@ class SudokuMain {
     void setNumber(int i, int j) {
         if (selectedNumber != 0) {
             switch (sudokuMode) {
+                case NONE:
+                    break;
                 case FILL:
                     sudokuBoard.setFill(SudokuBoard.key(i, j), selectedNumber);
                     break;
-                case MARK:
-                    sudokuBoard.setMarkFromUser(SudokuBoard.key(i, j), selectedNumber);
+                case CANDIDATE:
+                    sudokuBoard.setCandidateFromUser(SudokuBoard.key(i, j), selectedNumber);
                     break;
                 default:
             }
