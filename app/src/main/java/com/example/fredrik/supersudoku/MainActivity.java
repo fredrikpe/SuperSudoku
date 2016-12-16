@@ -15,6 +15,8 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     SudokuSurfaceView sudokuSurfaceView;
 
     Button newGameButton;
+    Button undoButton;
 
     ToggleButton fillToggleButton;
     ToggleButton candidateToggleButton;
@@ -83,6 +86,14 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        undoButton = (Button) findViewById(R.id.undoButton);
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sudokuMain.undo();
+            }
+        });
+
         fillToggleButton = (ToggleButton) findViewById(R.id.fillToggleButton);
         candidateToggleButton = (ToggleButton) findViewById(R.id.candidateToggleButton);
 
@@ -108,7 +119,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    sudokuMain.sudokuMode = SudokuMode.parseText(buttonView.getText().toString());
+                    sudokuMain.markMode = MarkMode.parseText(buttonView.getText().toString());
                     for (ToggleButton tb : modeToggleButtons) {
                         if (tb != buttonView)
                             tb.setChecked(false);

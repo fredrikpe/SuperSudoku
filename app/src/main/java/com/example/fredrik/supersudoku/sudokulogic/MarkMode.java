@@ -1,11 +1,11 @@
-package com.example.fredrik.supersudoku;
+package com.example.fredrik.supersudoku.sudokulogic;
 
-enum SudokuMode {
+public enum MarkMode {
     NONE,
     FILL,
     CANDIDATE;
 
-    static SudokuMode parseText(String text) {
+    public static MarkMode parseText(String text) {
         switch (text) {
             case "Fill":
                 return FILL;

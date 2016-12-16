@@ -1,5 +1,8 @@
 package com.example.fredrik.supersudoku;
 
+import com.example.fredrik.supersudoku.sudokulogic.Board;
+import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +12,8 @@ class SudokuMain {
 
     private MainActivity mainActivity;
 
-    SudokuBoard sudokuBoard;
-    SudokuMode sudokuMode;
+    Board board;
+    MarkMode markMode;
     int selectedNumber;
     int highlightNumber;
 
@@ -19,7 +22,7 @@ class SudokuMain {
     SudokuMain(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
 
-        sudokuBoard = new SudokuBoard();
+        board = new Board();
 
         parseSudokuTxtFile();
 
@@ -27,29 +30,28 @@ class SudokuMain {
     }
 
     void newGame() {
-        try {
-            sudokuBoard.getNewRandomSudoku();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        sudokuBoard.changeOccurred();
+        board.newGame();
     }
 
     void setNumber(int i, int j) {
         if (selectedNumber != 0) {
-            switch (sudokuMode) {
+            switch (markMode) {
                 case NONE:
                     break;
                 case FILL:
-                    sudokuBoard.setFill(SudokuBoard.key(i, j), selectedNumber);
+                    board.setFillFromUser(Board.key(i, j), selectedNumber);
                     break;
                 case CANDIDATE:
-                    sudokuBoard.setCandidateFromUser(SudokuBoard.key(i, j), selectedNumber);
+                    board.setCandidateFromUser(Board.key(i, j), selectedNumber);
                     break;
                 default:
             }
-            sudokuBoard.changeOccurred();
+            board.changeOccurred();
         }
+    }
+
+    void undo() {
+        board.undo();
     }
 
     void parseSudokuTxtFile() {
@@ -59,7 +61,7 @@ class SudokuMain {
         String line;
         try {
             while ((line = in.readLine()) != null) {
-                sudokuBoard.stringSudokus.add(line);
+                board.stringSudokus.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,17 +1,14 @@
-package com.example.fredrik.supersudoku;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.example.fredrik.supersudoku.sudokulogic;
 
 /**
  * Created by fredrik on 12.12.16.
  */
 
-public class SudokuSolver {
+public class Solver {
 //
 //    static int[] allNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 //
-//    void uniqueCandidate(SudokuBoard board) {
+//    void uniqueCandidate(Board board) {
 //        List<Integer> candidates = new ArrayList<>();
 //        List<Square> candidateSquares = new ArrayList<>();
 //
@@ -39,19 +36,19 @@ public class SudokuSolver {
 //        }
 //    }
 //
-//    void removeSingleColumnRowCandidates(SudokuBoard board) {
+//    void removeSingleColumnRowCandidates(Board board) {
 //        for (List<Square> box : board.getBoxContainers()) {
 //            columnRowCandidates(board, box, 1);
 //        }
 //    }
 //
-//    void removeDoubleColumnRowCandidates(SudokuBoard board) {
+//    void removeDoubleColumnRowCandidates(Board board) {
 //        for (List<Square> boxPair : board.getBoxPairContainers()) {
 //            columnRowCandidates(board, boxPair, 2);
 //        }
 //    }
 //
-//    private void columnRowCandidates(SudokuBoard board, List<Square> container, int size) {
+//    private void columnRowCandidates(Board board, List<Square> container, int size) {
 //        List<SquareHolder> columnCandidates = new ArrayList<>();
 //        List<SquareHolder> rowCandidates = new ArrayList<>();
 //        for (int n : allNumbers) {
@@ -87,7 +84,7 @@ public class SudokuSolver {
 //        }
 //    }
 //
-//    void nakedSubset(SudokuBoard board) {
+//    void nakedSubset(Board board) {
 //        for (List<Square> container : board.getContainers()) {
 //            for (int i = 2; i < 8; i++) {
 //                // Checks for naked subset in increasing order. A subset of eight implies a unique candidate.

@@ -38,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/candidateToggleButton"
                 android:layout_weight="1"
-                android:textOff="Mark"
-                android:textOn="Mark" />
+                android:textOff="Candidate"
+                android:textOn="Candidate" />
 
         </LinearLayout>
 
@@ -136,6 +136,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/newGameButton" />
+
+        <Button
+            android:text="Undo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/undoButton" />
 
     </LinearLayout>
 
