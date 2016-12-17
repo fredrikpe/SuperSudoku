@@ -50,10 +50,6 @@ class SudokuMain {
         }
     }
 
-    void undo() {
-        board.undo();
-    }
-
     void parseSudokuTxtFile() {
         InputStream is = mainActivity.getResources().openRawResource(R.raw.hard_sudokus);
         BufferedReader in = new BufferedReader(new InputStreamReader(is));

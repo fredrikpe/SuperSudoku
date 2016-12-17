@@ -2,6 +2,8 @@ package com.example.fredrik.supersudoku.sudokulogic;
 
 import android.os.AsyncTask;
 
+import com.example.fredrik.supersudoku.asdflaksd.Array;
+
 import java.util.Map;
 
 /**
@@ -10,12 +12,10 @@ import java.util.Map;
 
 class AssistantTask extends AsyncTask<Board, Integer, Boolean> {
 
-    Board board;
+    private Board board;
 
     @Override
     protected Boolean doInBackground(Board... objects) {
-        System.out.println("Doing in background");
-
         board = objects[0];
         try {
             Thread.sleep(100);
@@ -71,25 +71,14 @@ class AssistantTask extends AsyncTask<Board, Integer, Boolean> {
 
                 boolean[] validCandidates = getValidCandidates(board, key);
                 for (int candidate = 1; candidate <= 9; candidate++) {
-                    if (validCandidates[candidate - 1] &&!square.candidatesContains(candidate)) {
+                    if (validCandidates[candidate - 1] && !Array.contains(square.candidates, candidate)) {
                         board.setCandidateFromAssistant(key, candidate);
-                    } else if (!validCandidates[candidate - 1] && square.candidatesContains(candidate)) {
+                    } else if (!validCandidates[candidate - 1] && Array.contains(square.candidates, candidate)) {
                         board.setCandidateFromAssistant(key, candidate);
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Check the validity of the sudoku board, i.e, if it contains any collisions
-     * or if some squares have no valid candidates.
-     *
-     * @param board
-     * @return              true if the board is in a valid state
-     */
-    private boolean validityCheck(Board board) {
-        return true;
     }
 
     /**

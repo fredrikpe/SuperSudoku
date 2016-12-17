@@ -1,6 +1,8 @@
 package com.example.fredrik.supersudoku.sudokulogic;
 
 import com.example.fredrik.supersudoku.RNG;
+import com.example.fredrik.supersudoku.asdflaksd.Array;
+import com.example.fredrik.supersudoku.asdflaksd.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +25,15 @@ public class Board {
      */
     public ConcurrentMap<Integer, Square> squareMap;
 
+    public Hint hint;
+
     private Stack<Move> moves;
     private Stack<Move> userMoves;
 
     public List<String> stringSudokus;
 
     private List<Integer> representativeKeys;
-    private SomeEventListener listener;
-    public void setSomeEventListener(SomeEventListener listener) {
-        this.listener = listener;
-    }
+    private List<EventListener> eventListeners;
 
     public Board() {
         squareMap = new ConcurrentHashMap<>();
@@ -40,6 +41,7 @@ public class Board {
         userMoves = new Stack<>();
         representativeKeys = new ArrayList<>();
         stringSudokus = new ArrayList<>();
+        eventListeners = new ArrayList<>();
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -47,7 +49,11 @@ public class Board {
             }
             representativeKeys.add(key(i, i/3 + (i%3)*3));
         }
+
+        for ( int key : representativeKeys)
+            System.out.println(key);
     }
+
 
     public void newGame() {
         try {
@@ -79,8 +85,28 @@ public class Board {
                 squareMap.put(move.key, move.oldSquare);
             }
         }
-        if (listener != null) {
-            listener.onSomeEvent();
+        for (EventListener listener : eventListeners) {
+            listener.onChangeEvent();
+        }
+    }
+
+    public void hint() {
+        new HintTask().execute(this);
+    }
+
+    void hintTaskFinished(Hint result) {
+        hint = result;
+        if (hint != null) {
+            System.out.println("Hint. Number = " + hint.number +  ", key = " + hint.key);
+            System.out.println("Container:");
+            for (Integer key : hint.container) {
+                System.out.print(key + ", ");
+            }
+            System.out.println("-------");
+
+            for (EventListener listener : eventListeners) {
+                listener.onHintFoundEvent(hint.number);
+            }
         }
     }
 
@@ -89,6 +115,10 @@ public class Board {
      */
     public void changeOccurred() {
         new AssistantTask().execute(this);
+    }
+
+    public void addEventListener(EventListener listener) {
+        eventListeners.add(listener);
     }
 
     /**
@@ -140,16 +170,12 @@ public class Board {
      * @param result    true if assistant made changes to the board.
      */
     void assistantFinished(Boolean result) {
-        if (listener != null) {
-            listener.onSomeEvent();
+        for (EventListener listener : eventListeners) {
+            listener.onChangeEvent();
         }
         if (result) {
             new AssistantTask().execute(this);
         }
-    }
-
-    public interface SomeEventListener {
-        void onSomeEvent ();
     }
 
     private Integer[] getContainer(Integer key, ContainerType type) {
@@ -289,7 +315,7 @@ public class Board {
         for (int m : square.candidates) {
             if (m == candidate) return removeCandidate(square.candidates, candidate);
         }
-        if (!square.userRemovedCandidatesContains(candidate)) {
+        if (!Array.contains(square.userRemovedCandidates, candidate)) {
             return addCandidate(square.candidates, candidate);
         }
         return square.candidates;

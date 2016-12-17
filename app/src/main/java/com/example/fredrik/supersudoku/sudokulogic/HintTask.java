@@ -1,67 +1,93 @@
 package com.example.fredrik.supersudoku.sudokulogic;
 
+import android.os.AsyncTask;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by fredrik on 12.12.16.
  */
 
-public class Solver {
-//
-//    static int[] allNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-//
-//    void uniqueCandidate(Board board) {
-//        List<Integer> candidates = new ArrayList<>();
-//        List<Square> candidateSquares = new ArrayList<>();
-//
-//        for (List<Square> container : board.getContainers()) {
-//            candidates.clear();
-//            candidateSquares.clear();
-//            for (int n : allNumbers) {
-//                candidates.add(0);
-//                candidateSquares.add(null);
-//            }
-//            for (Square square : container) {
-//                for (int mark : square.candidates.iterable()) {
-//                    candidates.set(mark, candidates.get(mark) + 1);
-//                    candidateSquares.set(mark, square);
-//                }
-//            }
-//            for (int i = 0; i < 9; i++) {
-//                if (candidates.get(i) == 1) {
-//                    // Unique candidate found
-//                    candidateSquares.get(i).setFill(i);
-//                } else if (candidates.get(i) == 0) {
+public class HintTask extends AsyncTask<Board, Integer, Hint> {
+
+    static int[] allNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    private Board board;
+
+    @Override
+    protected Hint doInBackground(Board... boards) {
+        board = boards[0];
+        Hint hint = uniqueCandidate();
+        return hint;
+    }
+
+    @Override
+    protected void onPostExecute(Hint result) {
+        board.hintTaskFinished(result);
+    }
+
+    public Hint uniqueCandidate() {
+        int[] numOfCandidates;
+        Integer[] candidateKeys;
+
+        for (Integer[] container : board.getContainers()) {
+            numOfCandidates = new int[9];
+            candidateKeys = new Integer[9];
+            for (int n : allNumbers) {
+                numOfCandidates[n-1] = 0;
+                candidateKeys[n-1] = 0;
+            }
+
+            for (Integer key : container) {
+                Square square = board.squareMap.get(key);
+                if (square.editable && square.fill == 0) {
+                    for (int candidate : square.candidates) {
+                        numOfCandidates[candidate - 1]++;
+                        candidateKeys[candidate - 1] = key;
+                    }
+                }
+            }
+            for (int i = 0; i < 9; i++) {
+                if (numOfCandidates[i] == 1) {
+                    // Unique candidate found
+                    System.out.println("Found unique candidate! " + (i + 1) + ", key = " + candidateKeys[i]);
+                    return new UniqueCandidate(container, i + 1, candidateKeys[i]);
+                }
+//                  else if (candidates.get(i) == 0) {
 //                    // Illegal board state!
 //                }
-//            }
-//        }
-//    }
+            }
+        }
+        return null;
+    }
 //
 //    void removeSingleColumnRowCandidates(Board board) {
-//        for (List<Square> box : board.getBoxContainers()) {
+//        for (Integer[] box : board.getBoxContainers()) {
 //            columnRowCandidates(board, box, 1);
 //        }
 //    }
 //
 //    void removeDoubleColumnRowCandidates(Board board) {
-//        for (List<Square> boxPair : board.getBoxPairContainers()) {
+//        for (Integer[] boxPair : board.getBoxPairContainers()) {
 //            columnRowCandidates(board, boxPair, 2);
 //        }
 //    }
 //
-//    private void columnRowCandidates(Board board, List<Square> container, int size) {
+//    private void columnRowCandidates(Board board, Integer[] container, int size) {
 //        List<SquareHolder> columnCandidates = new ArrayList<>();
 //        List<SquareHolder> rowCandidates = new ArrayList<>();
 //        for (int n : allNumbers) {
 //            columnCandidates.add(new SquareHolder(size));
 //            rowCandidates.add(new SquareHolder(size));
 //        }
-//        for (Square square : container) {
-//            for (int mark : square.candidates) {
-//                if (rowCandidates.get(mark).no_conflicts) {
-//                    rowCandidates.get(mark).insert(square);
+//        for (Integer key : container) {
+//            Square square = board.squareMap.get(key);
+//            for (int candidate : square.candidates) {
+//                if (rowCandidates.get(candidate).no_conflicts) {
+//                    rowCandidates.get(candidate).insert(square);
 //                }
-//                if (columnCandidates.get(mark).no_conflicts) {
-//                    columnCandidates.get(mark).insert(square);
+//                if (columnCandidates.get(candidate).no_conflicts) {
+//                    columnCandidates.get(candidate).insert(square);
 //                }
 //            }
 //        }
@@ -95,8 +121,8 @@ public class Solver {
 //                    for (Square square2 : container) {
 //                        if (square2 == square || square2.candidates.size() > i)
 //                            continue;
-//                        for (int mark : square2.candidates.iterable()) {
-//                            if (!square.candidates.contains(mark))
+//                        for (int candidate : square2.candidates.iterable()) {
+//                            if (!square.candidates.contains(candidate))
 //                                continue outerLoop;
 //                        }
 //                    }

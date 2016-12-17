@@ -47,7 +47,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonLayout">
+            android:id="@+id/numberButtonLayout">
 
             <ToggleButton
                 android:text="ToggleButton"
@@ -131,17 +131,32 @@
                 android:textOn="9" />
         </LinearLayout>
 
-        <Button
-            android:text="New Game"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/newGameButton" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:text="Undo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/undoButton" />
+            <Button
+                android:text="New Game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/newGameButton"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hintButton" />
+
+            <Button
+                android:text="Undo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/undoButton"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
