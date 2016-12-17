@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentMap;
 public class Board {
 
     /**
-     * The main data object. Holds all the squares by key values corresponding to
+     * The main data object. Holds all the keys by key values corresponding to
      * position on board.
      * 0    1   2 ...
      * 9    10  11 ...
@@ -178,7 +178,7 @@ public class Board {
         }
     }
 
-    private Integer[] getContainer(Integer key, ContainerType type) {
+    Integer[] getContainer(Integer key, ContainerType type) {
         Integer[] container = new Integer[9];
         //System.out.println("Type = " + type + " key = " + key);
         switch (type) {
@@ -274,10 +274,10 @@ public class Board {
 //    }
 
     /**
-     * Returns all connected squares.
+     * Returns all connected keys.
      *
      * @param key   the key to the square
-     * @return      an array of connected squares
+     * @return      an array of connected keys
      */
     Integer[] getConnectedSquares(Integer key) {
         Integer[] connectedSquares = new Integer[27];
@@ -310,6 +310,13 @@ public class Board {
 
     public static Integer rowIndex(Integer key) { return key / 9; }
     public static Integer columnIndex(Integer key) { return key % 9; }
+    public static Integer containerIndex(Integer key, ContainerType type) {
+        switch (type) {
+            case ROW: return rowIndex(key);
+            case COLUMN: return columnIndex(key);
+            default: throw new IllegalArgumentException("Boxes don't have container indexes.");
+        }
+    }
 
     private int[] addRemoveCandidates(Square square, int candidate) {
         for (int m : square.candidates) {

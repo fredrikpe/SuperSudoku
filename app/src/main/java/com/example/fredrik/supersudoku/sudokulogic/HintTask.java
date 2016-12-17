@@ -1,6 +1,9 @@
 package com.example.fredrik.supersudoku.sudokulogic;
 
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
+
+import com.example.fredrik.supersudoku.asdflaksd.Array;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,9 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
     protected Hint doInBackground(Board... boards) {
         board = boards[0];
         Hint hint = uniqueCandidate();
+        if (hint == null) {
+           hint = removeSingleColumnRowCandidates();
+        }
         return hint;
     }
 
@@ -60,56 +66,71 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
         }
         return null;
     }
-//
-//    void removeSingleColumnRowCandidates(Board board) {
-//        for (Integer[] box : board.getBoxContainers()) {
-//            columnRowCandidates(board, box, 1);
+
+    @Nullable
+    private Hint removeSingleColumnRowCandidates() {
+        for (Integer[] box : board.getBoxContainers()) {
+            Hint hint = columnRowCandidates(board, box, 1);
+            if (hint != null) return hint;
+        }
+        return null;
+    }
+
+
+//    @Nullable
+//    private Hint removeDoubleColumnRowCandidates(Board board) {
+//        for (Integer[] box : board.getBoxPairContainers()) {
+//            Hint hint = columnRowCandidates(board, box, 2);
+//            if (hint != null) return hint;
 //        }
+//        return null;
 //    }
-//
-//    void removeDoubleColumnRowCandidates(Board board) {
-//        for (Integer[] boxPair : board.getBoxPairContainers()) {
-//            columnRowCandidates(board, boxPair, 2);
-//        }
-//    }
-//
-//    private void columnRowCandidates(Board board, Integer[] container, int size) {
-//        List<SquareHolder> columnCandidates = new ArrayList<>();
-//        List<SquareHolder> rowCandidates = new ArrayList<>();
-//        for (int n : allNumbers) {
-//            columnCandidates.add(new SquareHolder(size));
-//            rowCandidates.add(new SquareHolder(size));
-//        }
-//        for (Integer key : container) {
-//            Square square = board.squareMap.get(key);
-//            for (int candidate : square.candidates) {
-//                if (rowCandidates.get(candidate).no_conflicts) {
-//                    rowCandidates.get(candidate).insert(square);
-//                }
-//                if (columnCandidates.get(candidate).no_conflicts) {
-//                    columnCandidates.get(candidate).insert(square);
-//                }
-//            }
-//        }
-//        for (int i = 0; i < 9; i++) {
-//            if (rowCandidates.get(i).no_conflicts) {
-//                removeCandidate(i, board.getRows(rowCandidates.get(i).squares), container);
-//            }
-//            if (columnCandidates.get(i).no_conflicts) {
-//                removeCandidate(i, board.getColumns(columnCandidates.get(i).squares), container);
-//            }
-//        }
-//    }
-//
-//    void removeCandidate(int candidate, List<Square> container, List<Square> excluding) {
-//        if (excluding != null) {
-//            container.removeAll(excluding);
-//        }
-//        for (Square square : container) {
-//            square.candidates.remove(candidate);
-//        }
-//    }
-//
+
+    private Hint columnRowCandidates(Board board, Integer[] container, int size) {
+        Integer[][] rowColumnCandidates = new Integer[2][9];
+
+        for (Integer key : container) {
+            Square square = board.squareMap.get(key);
+            if (square.editable) {
+                for (int candidate : square.candidates) {
+                    for (ContainerType type : ContainerType.values()) {
+                        if (type == ContainerType.BOX) continue;
+                        if (rowColumnCandidates[type.ordinal()][candidate - 1] == null) {
+                            rowColumnCandidates[type.ordinal()][candidate - 1] = key;
+                        } else {
+                            if (!Board.containerIndex(rowColumnCandidates[type.ordinal()][candidate - 1], type).equals(Board.containerIndex(key, type))) {
+                                rowColumnCandidates[type.ordinal()][candidate - 1] = -1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            for (ContainerType type : ContainerType.values()) {
+                if (type == ContainerType.BOX) continue;
+                if ((rowColumnCandidates[type.ordinal()][i] != null) && (rowColumnCandidates[type.ordinal()][i] != -1)) {
+                    // Found single row in box
+                    // Check rest of row if candidate exists.
+                    int candidate = i + 1;
+                    Integer rowKey = rowColumnCandidates[type.ordinal()][i];
+                    Integer[] row = board.getContainer(rowKey, type);
+
+                    for (Integer key : row) {
+                        Square square = board.squareMap.get(key);
+                        if (!Array.contains(container, key)) {
+                            if (square.editable && square.fill == 0 &&  Array.contains(square.candidates, candidate)) {
+                                // Found hint
+                                return new BoxElimination(container, candidate, key);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 //    void nakedSubset(Board board) {
 //        for (List<Square> container : board.getContainers()) {
 //            for (int i = 2; i < 8; i++) {
@@ -127,26 +148,6 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
 //                        }
 //                    }
 //                }
-//            }
-//        }
-//    }
-//
-//    private class SquareHolder {
-//        List<Square> squares;
-//        private int max_size;
-//        boolean no_conflicts = true;
-//
-//        SquareHolder(int max_size) {
-//            this.max_size = max_size;
-//            squares = new ArrayList<>();
-//        }
-//
-//        void insert(Square s) {
-//            if (squares.contains(s)) {
-//            } else if (squares.size() < max_size) {
-//                squares.add(s);
-//            } else {
-//                no_conflicts = false;
 //            }
 //        }
 //    }

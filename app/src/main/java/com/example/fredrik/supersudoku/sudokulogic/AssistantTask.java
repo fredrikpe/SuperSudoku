@@ -37,7 +37,7 @@ class AssistantTask extends AsyncTask<Board, Integer, Boolean> {
     }
 
     /**
-     * Finds and fills squares with single candidates in the given board.
+     * Finds and fills keys with single candidates in the given board.
      *
      * @param   board the sudoku board to search through
      * @return              true if a single candidate was found
@@ -58,7 +58,7 @@ class AssistantTask extends AsyncTask<Board, Integer, Boolean> {
     }
 
     /**
-     * Updates candidates for all squares in the sudoku board.
+     * Updates candidates for all keys in the sudoku board.
      * User removed candidates are not added.
      *
      * @param board   the sudoku board to update
