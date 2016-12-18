@@ -24,6 +24,9 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
         if (hint == null) {
            hint = removeSingleColumnRowCandidates();
         }
+//        if (hint == null) {
+//            hint = removeDoubleColumnRowCandidates();
+//        }
         return hint;
     }
 
@@ -70,23 +73,24 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
     @Nullable
     private Hint removeSingleColumnRowCandidates() {
         for (Integer[] box : board.getBoxContainers()) {
-            Hint hint = columnRowCandidates(board, box, 1);
+            Hint hint = columnRowCandidates(board, box);
             if (hint != null) return hint;
         }
         return null;
     }
 
 
+    // This needs changing to columnRowCandidates method to handle two boxes, two row/c olumns
 //    @Nullable
-//    private Hint removeDoubleColumnRowCandidates(Board board) {
-//        for (Integer[] box : board.getBoxPairContainers()) {
-//            Hint hint = columnRowCandidates(board, box, 2);
+//    private Hint removeDoubleColumnRowCandidates() {
+//        for (Integer[] boxPair : board.getBoxPairContainers()) {
+//            Hint hint = columnRowCandidates(board, boxPair);
 //            if (hint != null) return hint;
 //        }
 //        return null;
 //    }
 
-    private Hint columnRowCandidates(Board board, Integer[] container, int size) {
+    private Hint columnRowCandidates(Board board, Integer[] container) {
         Integer[][] rowColumnCandidates = new Integer[2][9];
 
         for (Integer key : container) {
@@ -113,15 +117,15 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
                     // Found single row in box
                     // Check rest of row if candidate exists.
                     int candidate = i + 1;
-                    Integer rowKey = rowColumnCandidates[type.ordinal()][i];
-                    Integer[] row = board.getContainer(rowKey, type);
+                    Integer containerKey = rowColumnCandidates[type.ordinal()][i];
+                    Integer[] rowColumnContainer = board.getContainer(containerKey, type);
 
-                    for (Integer key : row) {
+                    for (Integer key : rowColumnContainer) {
                         Square square = board.squareMap.get(key);
-                        if (!Array.contains(container, key)) {
+                        if (!Array.contains(rowColumnContainer, key)) {
                             if (square.editable && square.fill == 0 &&  Array.contains(square.candidates, candidate)) {
                                 // Found hint
-                                return new BoxElimination(container, candidate, key);
+                                return new BoxElimination(rowColumnContainer, candidate, key);
                             }
                         }
                     }

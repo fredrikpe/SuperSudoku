@@ -257,21 +257,32 @@ public class Board {
         return boxContainers;
     }
 
-//    List<Integer[]> getBoxPairContainers() {
-//        List<Integer[]> boxPairContainers = new ArrayList<>();
-//        for (Integer[] box1 : getBoxContainers()) {
-//            for (Integer[] box2 : getBoxContainers()) {
-//                if (box1 != box2) {
-//                    if (rowIndex(box1.get(0)) / 3 == rowIndex(box1.get(0)) / 3
-//                            || columnIndex(box1.get(0)) / 3 == columnIndex(box1.get(0)) / 3) {
-//                        boxPairContainers.add(box1);
-//                        boxPairContainers.get(boxPairContainers.size() - 1).addAll(box2);
-//                    }
-//                }
-//            }
-//        }
-//        return boxPairContainers;
-//    }
+    Integer[][] getBoxPairContainers() {
+        Integer[][] boxPairContainers = new Integer[18][18];
+        Integer[] box1, box2;
+        int c = 0;
+        for (Integer key1 : representativeKeys) {
+            box1 = getBox(key1);
+            for (Integer key2 : representativeKeys) {
+                box2 = getBox(key2);
+                if (!key1.equals(key2)) {
+                    if ((key1 / 9) / 3 == (key2 / 9) / 3 || (key1 % 9) / 3 == (key2 % 9) / 3) {
+                        // Same box row or box column
+                        for (int i = 0; i < 9; i++) {
+                            boxPairContainers[c][i] = box1[i];
+                            boxPairContainers[c][i + 9] = box2[i];
+                        }
+                    }
+                }
+            }
+        }
+        for (Integer[] pair : boxPairContainers) {
+            for (Integer key : pair) {
+                assert key != null;
+            }
+        }
+        return boxPairContainers;
+    }
 
     /**
      * Returns all connected keys.
