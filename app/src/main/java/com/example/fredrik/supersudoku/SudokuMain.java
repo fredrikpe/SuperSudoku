@@ -1,8 +1,5 @@
 package com.example.fredrik.supersudoku;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import com.example.fredrik.supersudoku.sudokulogic.Board;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
@@ -10,13 +7,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 class SudokuMain {
 
     private MainActivity mainActivity;
 
     Board board;
-    MarkMode markMode;
+    MarkMode markMode = MarkMode.FILL;
     int selectedNumber;
     int highlightNumber;
 
@@ -26,12 +25,10 @@ class SudokuMain {
         board = new Board();
 
         parseSudokuTxtFile();
-
-        newGame();
     }
 
-    void newGame() {
-        board.newGame();
+    void newGame(int difficulty) {
+        board.newGame(difficulty);
     }
 
     void setNumber(int i, int j) {
@@ -52,16 +49,24 @@ class SudokuMain {
     }
 
     void parseSudokuTxtFile() {
-        InputStream is = mainActivity.getResources().openRawResource(R.raw.hard_sudokus);
-        BufferedReader in = new BufferedReader(new InputStreamReader(is));
+        List<InputStream> iss = new ArrayList<>();
+        iss.add(mainActivity.getResources().openRawResource(R.raw.super_easy_sudokus));
+        iss.add(mainActivity.getResources().openRawResource(R.raw.very_easy_sudokus));
+        iss.add(mainActivity.getResources().openRawResource(R.raw.easy_sudokus));
+        iss.add(mainActivity.getResources().openRawResource(R.raw.medium_sudokus));
+        iss.add(mainActivity.getResources().openRawResource(R.raw.hard_sudokus));
 
-        String line;
-        try {
-            while ((line = in.readLine()) != null) {
-                board.stringSudokus.add(line);
+        for (int i=0; i<iss.size(); i++) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(iss.get(i)));
+            String line;
+            try {
+                board.stringSudokus.add(new ArrayList<>());
+                while ((line = in.readLine()) != null) {
+                    board.stringSudokus.get(i).add(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

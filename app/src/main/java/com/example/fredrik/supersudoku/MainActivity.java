@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
+import android.support.v7.app.AlertDialog;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import com.example.fredrik.supersudoku.asdflaksd.EventListener;
-import com.example.fredrik.supersudoku.sudokulogic.Board;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
 public class MainActivity extends AppCompatActivity
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity
     LinearLayout mainLayout;
     SudokuSurfaceView sudokuSurfaceView;
 
-    Button newGameButton;
     Button undoButton;
     Button hintButton;
 
@@ -79,16 +77,13 @@ public class MainActivity extends AppCompatActivity
         initButtons();
         setDefaultViewState();
 
-        sudokuMain.newGame();
+        sudokuMain.newGame(3);
     }
 
     private void setDefaultViewState() {
     }
 
     private void initButtons() {
-        newGameButton = (Button) findViewById(R.id.newGameButton);
-        newGameButton.setOnClickListener(view -> sudokuMain.newGame());
-
         undoButton = (Button) findViewById(R.id.undoButton);
         undoButton.setOnClickListener(view -> sudokuMain.board.undo());
 
@@ -162,6 +157,14 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
+        } else if (id == R.id.action_new_game) {
+            CharSequence colors[] = new CharSequence[] {"Super easy", "Very easy", "Easy", "Medium", "Hard"};
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choose difficulty");
+            builder.setItems(colors, (dialog, which) -> sudokuMain.newGame(which));
+            builder.show();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -175,12 +178,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

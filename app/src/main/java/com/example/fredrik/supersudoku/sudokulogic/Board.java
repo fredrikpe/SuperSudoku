@@ -30,7 +30,7 @@ public class Board {
     private Stack<Move> moves;
     private Stack<Move> userMoves;
 
-    public List<String> stringSudokus;
+    public List<List<String>> stringSudokus;
 
     private List<Integer> representativeKeys;
     private List<EventListener> eventListeners;
@@ -55,9 +55,9 @@ public class Board {
     }
 
 
-    public void newGame() {
+    public void newGame(int difficulty) {
         try {
-            getNewRandomSudoku();
+            getNewRandomSudoku(difficulty);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -302,10 +302,10 @@ public class Board {
         return connectedSquares;
     }
 
-    public void getNewRandomSudoku() throws Exception {
-        if (stringSudokus != null && stringSudokus.size() > 0) {
-            int r  = RNG.randInt(0, stringSudokus.size() - 1);
-            String sudokuString = stringSudokus.get(r);
+    public void getNewRandomSudoku(int difficulty) throws Exception {
+        if (stringSudokus != null && stringSudokus.get(difficulty).size() > 0) {
+            int r  = RNG.randInt(0, stringSudokus.get(difficulty).size() - 1);
+            String sudokuString = stringSudokus.get(difficulty).get(r);
             if (sudokuString.length() != 81) {
                 throw new Exception("Sudoku string not 81 chars long!");
             }
