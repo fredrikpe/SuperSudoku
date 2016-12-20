@@ -23,10 +23,11 @@ import com.example.fredrik.supersudoku.sudokulogic.Hint;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, EventListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     LinearLayout mainLayout;
     SudokuSurfaceView sudokuSurfaceView;
+    ControlSurfaceView controlSurfaceView;
 
     Button undoButton;
     Button hintButton;
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         sudokuMain = new SudokuMain(this);
-        sudokuMain.board.addEventListener(this);
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,62 +72,12 @@ public class MainActivity extends AppCompatActivity
 
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
 
+        controlSurfaceView = new ControlSurfaceView(this);
         sudokuSurfaceView = new SudokuSurfaceView(this);
+        mainLayout.addView(controlSurfaceView, 0);
         mainLayout.addView(sudokuSurfaceView, 0);
 
-        initButtons();
-        setDefaultViewState();
-
         sudokuMain.newGame(3);
-    }
-
-    private void setDefaultViewState() {
-    }
-
-    private void initButtons() {
-        undoButton = (Button) findViewById(R.id.undoButton);
-        undoButton.setOnClickListener(view -> sudokuMain.board.undo());
-
-        hintButton = (Button) findViewById(R.id.hintButton);
-        hintButton.setOnClickListener(view -> sudokuMain.board.hint());
-
-        candidateToggleButton = (ToggleButton) findViewById(R.id.candidateToggleButton);
-        candidateToggleButton.setOnCheckedChangeListener((buttonView, isChecked) ->
-            sudokuMain.markMode = isChecked ? MarkMode.CANDIDATE : MarkMode.FILL);
-
-        toggleButton1 = (ToggleButton) findViewById(R.id.toggleButton1);
-        toggleButton2 = (ToggleButton) findViewById(R.id.toggleButton2);
-        toggleButton3 = (ToggleButton) findViewById(R.id.toggleButton3);
-        toggleButton4 = (ToggleButton) findViewById(R.id.toggleButton4);
-        toggleButton5 = (ToggleButton) findViewById(R.id.toggleButton5);
-        toggleButton6 = (ToggleButton) findViewById(R.id.toggleButton6);
-        toggleButton7 = (ToggleButton) findViewById(R.id.toggleButton7);
-        toggleButton8 = (ToggleButton) findViewById(R.id.toggleButton8);
-        toggleButton9 = (ToggleButton) findViewById(R.id.toggleButton9);
-
-        modeToggleButtons = new ToggleButton[]{candidateToggleButton};
-        numberToggleButtons = new ToggleButton[]{toggleButton1, toggleButton2,
-                toggleButton3, toggleButton4, toggleButton5, toggleButton6, toggleButton7,
-                toggleButton8, toggleButton9};
-        makeToggleButtonsExclusive();
-    }
-
-    private void makeToggleButtonsExclusive() {
-        CompoundButton.OnCheckedChangeListener numberChangeChecker = (buttonView, isChecked) -> {
-            if (isChecked) {
-                int buttonNumber = Integer.parseInt(buttonView.getText().toString());
-                sudokuMain.selectedNumber = sudokuMain.selectedNumber == buttonNumber ? 0 : buttonNumber;
-                sudokuMain.highlightNumber = sudokuMain.highlightNumber == buttonNumber ? 0 : buttonNumber;
-                sudokuSurfaceView.invalidate();
-                for (ToggleButton tb : numberToggleButtons) {
-                    if (tb != buttonView)
-                        tb.setChecked(false);
-                }
-            }
-        };
-        for (ToggleButton tb : numberToggleButtons) {
-            tb.setOnCheckedChangeListener(numberChangeChecker);
-        }
     }
 
     @Override
@@ -188,17 +138,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onChangeEvent() {}
-
-    @Override
-    public void onHintFoundEvent(Hint hint) {
-        if (hint.number != 0) {
-            numberToggleButtons[hint.number - 1].setChecked(true);
-        }
-        candidateToggleButton.setChecked(hint.remove_candidate);
     }
 }
 

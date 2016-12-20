@@ -8,12 +8,10 @@ import android.graphics.Paint;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.ViewConfiguration;
 
 import com.example.fredrik.supersudoku.asdflaksd.Array;
 import com.example.fredrik.supersudoku.asdflaksd.EventListener;
@@ -22,7 +20,6 @@ import com.example.fredrik.supersudoku.sudokulogic.Square;
 import com.example.fredrik.supersudoku.sudokulogic.Board;
 
 import java.util.Map;
-import java.util.stream.IntStream;
 
 /**
  * Created by fredrik on 11.12.16.
@@ -31,10 +28,10 @@ import java.util.stream.IntStream;
 public class SudokuSurfaceView extends SurfaceView implements EventListener {
 
     int width, height, squareWidth, squareHeight;
-    float markTextSize = 23;
+    float markTextSize = 40;
     float fillTextSize = 100;
 
-    Paint paint = new Paint();
+    Paint paint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
     Canvas canvas;
 
     final GestureDetector gestureDetector;
@@ -51,7 +48,11 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         this.setBackgroundColor(Color.WHITE);
-        this.getHolder().setFixedSize(100, 850);
+
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        int dpWidth = displayMetrics.widthPixels;
+
+        this.getHolder().setFixedSize(0, dpWidth);
 
         sudokuMain.board.addEventListener(this);
 
@@ -96,14 +97,14 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
                 }
                 paint.setTextSize(fillTextSize);
                 sx = sx + squareWidth / 4;
-                sy = sy + squareHeight - 10;
+                sy = sy + squareHeight - 20;
                 canvas.drawText(Integer.toString(square.fill), sx, sy, paint);
             } else {
                 paint.setColor(Color.BLACK);
                 paint.setTextSize(markTextSize);
                 for (int mark : square.candidates) {
-                    mx = sx + ((mark - 1) % 3) * squareWidth / 3 + 10;
-                    my = sy + (mark - 1) / 3 * squareHeight / 3 + 25;
+                    mx = sx + ((mark - 1) % 3) * (int) (squareWidth*0.28) + 15;
+                    my = sy + (mark - 1) / 3 * (int) (squareHeight*0.3) + 37;
                     canvas.drawText(Integer.toString(mark), mx, my, paint);
                 }
             }
@@ -113,11 +114,11 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
     private void drawBoard() {
         int startH, startV;
         paint.setColor(Color.BLACK);
-        for (int i=0; i<=9; i++) {
+        for (int i=1; i<9; i++) {
             if (i % 3 == 0)
-                paint.setStrokeWidth(10);
-            else
                 paint.setStrokeWidth(6);
+            else
+                paint.setStrokeWidth(3);
 
             startH = i * squareHeight;
             startV = i * squareWidth;
@@ -174,7 +175,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
             if (key.equals(sudokuMain.board.hint.key)) {
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(10);
-                paint.setColor(ContextCompat.getColor(getContext(), R.color.colorRedbox));
+                paint.setColor(ContextCompat.getColor(getContext(), R.color.colorRedBox));
                 canvas.drawRect(x + 2, y + 2, x + squareWidth - 2, y + squareHeight - 2, paint);
             }
         }
@@ -248,7 +249,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
     }
 
     @Override
-    public void onHintFoundEvent(int number) {
+    public void onHintFoundEvent(Hint hint) {
         invalidate();
     }
 
