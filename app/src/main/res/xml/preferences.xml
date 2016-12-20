@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<CheckBoxPreference
+    android:key="highlights"
+    android:title="Highlight numbers"
+    android:summary="Highlights squares."
+    android:defaultValue="true" />
+<CheckBoxPreference
+    android:key="fill_candidates"
+    android:title="Auto mark candidates"
+    android:summary="Automatically marks and updates candidates."
+    android:defaultValue="true" />
+<CheckBoxPreference
+    android:key="fill_single"
+    android:title="Auto fill single candidates"
+    android:summary="Automatically squares with a single candidate."
+    android:defaultValue="true" />
+</PreferenceScreen>

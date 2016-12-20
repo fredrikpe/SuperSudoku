@@ -1,6 +1,9 @@
 package com.example.fredrik.supersudoku;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,7 +32,6 @@ public class MainActivity extends AppCompatActivity
     Button undoButton;
     Button hintButton;
 
-    ToggleButton fillToggleButton;
     ToggleButton candidateToggleButton;
     ToggleButton[] modeToggleButtons;
 
@@ -45,13 +47,15 @@ public class MainActivity extends AppCompatActivity
     ToggleButton[] numberToggleButtons;
 
     SudokuMain sudokuMain;
+    public static SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sudokuMain = new SudokuMain(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        sudokuMain = new SudokuMain(this);
         sudokuMain.board.addEventListener(this);
 
         setContentView(R.layout.activity_main);
@@ -79,7 +83,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setDefaultViewState() {
-        fillToggleButton.setChecked(true);
     }
 
     private void initButtons() {
@@ -92,8 +95,9 @@ public class MainActivity extends AppCompatActivity
         hintButton = (Button) findViewById(R.id.hintButton);
         hintButton.setOnClickListener(view -> sudokuMain.board.hint());
 
-        fillToggleButton = (ToggleButton) findViewById(R.id.fillToggleButton);
         candidateToggleButton = (ToggleButton) findViewById(R.id.candidateToggleButton);
+        candidateToggleButton.setOnCheckedChangeListener((buttonView, isChecked) ->
+            sudokuMain.markMode = isChecked ? MarkMode.CANDIDATE : MarkMode.FILL);
 
         toggleButton1 = (ToggleButton) findViewById(R.id.toggleButton1);
         toggleButton2 = (ToggleButton) findViewById(R.id.toggleButton2);
@@ -105,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         toggleButton8 = (ToggleButton) findViewById(R.id.toggleButton8);
         toggleButton9 = (ToggleButton) findViewById(R.id.toggleButton9);
 
-        modeToggleButtons = new ToggleButton[]{fillToggleButton, candidateToggleButton};
+        modeToggleButtons = new ToggleButton[]{candidateToggleButton};
         numberToggleButtons = new ToggleButton[]{toggleButton1, toggleButton2,
                 toggleButton3, toggleButton4, toggleButton5, toggleButton6, toggleButton7,
                 toggleButton8, toggleButton9};
@@ -113,22 +117,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void makeToggleButtonsExclusive() {
-        CompoundButton.OnCheckedChangeListener modeChangeChecker = (buttonView, isChecked) -> {
-            if (isChecked) {
-                sudokuMain.markMode = MarkMode.parseText(buttonView.getText().toString());
-                for (ToggleButton tb : modeToggleButtons) {
-                    if (tb != buttonView)
-                        tb.setChecked(false);
-                }
-            }
-        };
-        for (ToggleButton tb : modeToggleButtons) {
-            tb.setOnCheckedChangeListener(modeChangeChecker);
-        }
         CompoundButton.OnCheckedChangeListener numberChangeChecker = (buttonView, isChecked) -> {
             if (isChecked) {
                 int buttonNumber = Integer.parseInt(buttonView.getText().toString());
                 sudokuMain.selectedNumber = sudokuMain.selectedNumber == buttonNumber ? 0 : buttonNumber;
+                sudokuMain.highlightNumber = sudokuMain.highlightNumber == buttonNumber ? 0 : buttonNumber;
+                sudokuSurfaceView.invalidate();
                 for (ToggleButton tb : numberToggleButtons) {
                     if (tb != buttonView)
                         tb.setChecked(false);
@@ -137,12 +131,6 @@ public class MainActivity extends AppCompatActivity
         };
         for (ToggleButton tb : numberToggleButtons) {
             tb.setOnCheckedChangeListener(numberChangeChecker);
-            tb.setOnLongClickListener(v -> {
-                int buttonNumber = Integer.parseInt(((ToggleButton) v).getTextOff().toString());
-                sudokuMain.highlightNumber = sudokuMain.highlightNumber == buttonNumber ? 0 : buttonNumber;
-                sudokuSurfaceView.invalidate();
-                return false;
-            });
         }
     }
 
@@ -172,6 +160,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

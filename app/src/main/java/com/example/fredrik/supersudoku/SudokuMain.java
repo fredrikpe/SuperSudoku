@@ -1,5 +1,8 @@
 package com.example.fredrik.supersudoku;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import com.example.fredrik.supersudoku.sudokulogic.Board;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
@@ -16,8 +19,6 @@ class SudokuMain {
     MarkMode markMode;
     int selectedNumber;
     int highlightNumber;
-
-    boolean useAssistant = true;
 
     SudokuMain(MainActivity mainActivity) {
         this.mainActivity = mainActivity;

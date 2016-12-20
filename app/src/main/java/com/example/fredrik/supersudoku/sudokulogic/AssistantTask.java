@@ -2,6 +2,7 @@ package com.example.fredrik.supersudoku.sudokulogic;
 
 import android.os.AsyncTask;
 
+import com.example.fredrik.supersudoku.MainActivity;
 import com.example.fredrik.supersudoku.asdflaksd.Array;
 
 import java.util.Map;
@@ -17,13 +18,15 @@ class AssistantTask extends AsyncTask<Board, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(Board... objects) {
         board = objects[0];
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (MainActivity.sharedPreferences.getBoolean("fill_candidates", true)) {
+            sleep(100);
+            updateCandidates(objects[0]);
         }
-        updateCandidates(objects[0]);
-        return singleCandidate(objects[0]);
+        if (MainActivity.sharedPreferences.getBoolean("fill_single", true)) {
+            sleep(100);
+            return singleCandidate(objects[0]);
+        }
+        return false;
     }
 
     /**
@@ -34,6 +37,14 @@ class AssistantTask extends AsyncTask<Board, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         board.assistantFinished(result);
+    }
+
+    private void sleep(int millis) {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

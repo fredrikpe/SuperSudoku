@@ -2,202 +2,202 @@
 <items version="2" >
 
     <item
-        jar="/home/fredrik/Android/Sdk/platforms/android-25/optional/org.apache.http.legacy.jar"
-        revision="25.0.1"
-        sha1="f3d8ef56b30e630eb84718ee1b10a38b38c057c0">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/org.apache.http.legacy-8294dac28dfff88a0ead182ad313bcc52f026c24.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-integration/1.3/5de0c73fef18917cd85d0ab70bb23818685e4dfd/hamcrest-integration-1.3.jar"
-        revision="25.0.1"
-        sha1="5de0c73fef18917cd85d0ab70bb23818685e4dfd">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/hamcrest-integration-1.3-ab6795963d4d4874a11b1be53d74096169472b6c.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-1b8977cdaeb482b36022a1d31caf132e4fe582c0.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
+        jar="/home/fred/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
         revision="25.0.1"
         sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/support-annotations-25.0.1-89d820c2c13140cb787f6c9a33f79ba91bd369d3.jar" />
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/support-annotations-25.0.1-497804487e4af128026a15cb7a6c4e5fd00c28a6.jar" />
     </item>
     <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-691e32f9000d98a9324ea070ae551b201f00caa9.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-03db5ee877bca18163910f3d89058539f81826cc.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-377328ed383b7c0e67487042d034e8124ed82e71.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        revision="25.0.1"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-8e3cdf7595c9d956e0abd5ece2f5e082a994a73f.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"
-        revision="25.0.1"
-        sha1="67ff45d9ae02e583d0f9b3432a5ebbe05c30c966">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/javawriter-2.1.1-6acaba5fbbcaed100d9795d50ccb24ffff974607.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        revision="25.0.1"
-        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-e9356d614d8c1779bf6cf02df8e6e7e2421f107b.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-9c0be6218528315995e0fbcf0987719009ece1be.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-a593ca491e2e9403c06642300bfa79bf3d2333a1.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test/exposed-instrumentation-api-publish/0.5/jars/classes.jar"
-        revision="25.0.1"
-        sha1="905f3e63973d47fedf2d945fa31d8c0f0c98816e">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-8c2cf7fc7be8431535f83d02497b05cfbdcf078f.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        revision="25.0.1"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-b8de152b757edfb927f5b6ab9a922fd0bad9126f.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-core/2.2.2/jars/classes.jar"
-        revision="25.0.1"
-        sha1="d115b0e9e1501135fe91254ba884fcbd83d374c0">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-8264c5232c72e103b23fe939306025fc84611e79.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        revision="25.0.1"
-        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-3ce034db32ee590c47826b5c2cfc10a7c7f7eb8b.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"
-        revision="25.0.1"
-        sha1="42a25dc3219429f0e5d060061f71acb49bf010a0">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/hamcrest-core-1.3-03addd32db66d713c80efa93fca3e2d06bd68c53.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
-        revision="25.0.1"
-        sha1="6975da39a7040257bd51d21a231b76c915872d38">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/javax.inject-1-6e5a576a98ad3a9f78f0c03fb506899b17f7aaa8.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-2ef43a235bd34e53ff9a39023a3d58800bd6ef15.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar"
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar"
         revision="25.0.1"
         sha1="516c03b21d50a644d538de0f0369c620989cd8f0">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/jsr305-2.0.1-59be9089db443fc1147f309bce76487510b313a5.jar" />
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/jsr305-2.0.1-35e9c04cd511dc12b95cd7ce04e26af7409b19e3.jar" />
     </item>
     <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-idling-resource/2.2.2/jars/classes.jar"
-        revision="25.0.1"
-        sha1="a890ee8445927649d9ed50f625a315d8758688be">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-6216d31dd24d82d95cca6f24723db87f168155db.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-a124a498dc9443c272e1503faf446623d0705d56.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test/rules/0.5/jars/classes.jar"
-        revision="25.0.1"
-        sha1="7e11799d8a26bfa5d48acafe012ee5545b9bf468">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-4c4a0f5d7521da7b70f2c912d2206f5eab4e401d.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-44a79d1d72b2641496e6d13d74b1485a5f1b1b51.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/transition/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-eb7b6d9b921317bc044d8da7d21693017d35f9c7.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/Android/Sdk/platforms/android-25/android.jar"
-        revision="25.0.1"
-        sha1="ee6109bffb77e2a8508a9faf3eceab577ca73709">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/android-a061c3697010da3f39f58d4fc23c1e2d6bf48a9c.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/design/25.0.1/jars/classes.jar"
-        revision="25.0.1"
-        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-f816fc839cedc3799f0d6a0de6a29040058cbcda.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        revision="25.0.1"
-        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-9649a975a1d8a12bb39e5ec9a529a133486ea351.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar"
-        revision="25.0.1"
-        sha1="2973d150c0dc1fefe998f834810d68f278ea58ec">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/junit-4.12-9a0ff4bc8ecd712a8ddd0c564d44a9aa0f95adcf.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-library/1.3/4785a3c21320980282f9f33d0d1264a69040538f/hamcrest-library-1.3.jar"
-        revision="25.0.1"
-        sha1="4785a3c21320980282f9f33d0d1264a69040538f">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/hamcrest-library-1.3-432f51ca4a89002e8efda662ccb9a4aa32b691c2.jar" />
-    </item>
-    <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test/runner/0.5/jars/classes.jar"
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test/runner/0.5/jars/classes.jar"
         revision="25.0.1"
         sha1="796f9229948e907471c5595fbe94655ccf03ff73">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-e6b50685c99e1917e6f46b99b3f4f48ddde38e42.jar" />
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-a5654c9cd1d44023314216ededfba942e0360d69.jar" />
     </item>
     <item
-        jar="/home/fredrik/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
+        jar="/home/fred/Android/Sdk/platforms/android-25/android.jar"
+        revision="25.0.1"
+        sha1="ee6109bffb77e2a8508a9faf3eceab577ca73709">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/android-78d1328d95fb9bbe8c0ea8b26364e548354b6ed8.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-62556ad667c7f25f9c3eaa5319d1c365a589a698.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
         revision="25.0.1"
         sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-6c02d3bf6b518993a99eba009b81d568e5878d82.jar" />
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-f56c6a442ddc7ddc4c27fa2b7f57173a04e20319.jar" />
     </item>
     <item
-        jar="/home/fredrik/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar"
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar"
+        revision="25.0.1"
+        sha1="2973d150c0dc1fefe998f834810d68f278ea58ec">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/junit-4.12-785f782a3c4404cb23bd1705757df5a981451c40.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-93f5e7d448e9450fb8a4e35416da1d02899323ae.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        revision="25.0.1"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-79dd76a3de7a33c6edeb8a656ed41bc5d246354a.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test/exposed-instrumentation-api-publish/0.5/jars/classes.jar"
+        revision="25.0.1"
+        sha1="905f3e63973d47fedf2d945fa31d8c0f0c98816e">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-1d80415b3fb3abf2452429a6ed5695868e3fe732.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        revision="25.0.1"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-e7c4cd56c5ce3dc359af849b1fee7a4bad10e1ac.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-14c701143f3924597d8e1bab71b26db2b51e11f7.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        revision="25.0.1"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-6065683f2d771050bfad84507b716f984d926aed.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-idling-resource/2.2.2/jars/classes.jar"
+        revision="25.0.1"
+        sha1="a890ee8445927649d9ed50f625a315d8758688be">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-bb2b52ce83c1541757af2f20f45d8fb45f934512.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/transition/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-df7b25ca6bfba194ab4cdc47a976b64450f89190.jar" />
+    </item>
+    <item
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"
+        revision="25.0.1"
+        sha1="67ff45d9ae02e583d0f9b3432a5ebbe05c30c966">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/javawriter-2.1.1-bbaa365312bf72fc4e5d0b004a775190327fb982.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-core/2.2.2/jars/classes.jar"
+        revision="25.0.1"
+        sha1="d115b0e9e1501135fe91254ba884fcbd83d374c0">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-ee03438fce3cbe1978d458693743ad8e7ba411f2.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-3b8b77b0987f558100f3f4098c65467c88712053.jar" />
+    </item>
+    <item
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"
+        revision="25.0.1"
+        sha1="42a25dc3219429f0e5d060061f71acb49bf010a0">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/hamcrest-core-1.3-7604038a8e57ff2d03233dedd35bc0f1912e2b0d.jar" />
+    </item>
+    <item
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-integration/1.3/5de0c73fef18917cd85d0ab70bb23818685e4dfd/hamcrest-integration-1.3.jar"
+        revision="25.0.1"
+        sha1="5de0c73fef18917cd85d0ab70bb23818685e4dfd">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/hamcrest-integration-1.3-9840f5522f94e795e39af72f74b0d98ee0af027a.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        revision="25.0.1"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-c44026cbe10737bd49ea5abe1a89e729bf4b8d83.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/design/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-d79afc366784c15ae4498012afc2908a65a17237.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-8839a5f6c54927440b952f2bdec9c06396c07f03.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-1addf7296085d7f44d8af9d41a102711a3c2803d.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-2e67017ccd50ebf400847480034e6aeed8bda7c6.jar" />
+    </item>
+    <item
+        jar="/home/fred/Android/Sdk/platforms/android-25/optional/org.apache.http.legacy.jar"
+        revision="25.0.1"
+        sha1="f3d8ef56b30e630eb84718ee1b10a38b38c057c0">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackRuntimeLibraries/debug/jars/8000/40/org.apache.http.legacy-2b81d9f607721f0d6a51d52c181f3db4fddd35d5.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        revision="25.0.1"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/internal_impl-25.0.1-c38f0fed55e4638a0ac6c69fb47858369b9693cb.jar" />
+    </item>
+    <item
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar"
         revision="25.0.1"
         sha1="479c1e06db31c432330183f5cae684163f186146">
-        <dex dex="/home/fredrik/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/javax.annotation-api-1.2-791ac287e4f7d7532c9fe72f654aeeefdd9d115f.jar" />
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/javax.annotation-api-1.2-06c75e5ef033aa969f5ffae33bd1512a53bf021f.jar" />
+    </item>
+    <item
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        revision="25.0.1"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/javax.inject-1-f6a266f3d19fe53d2e22786ad32d943371b1084d.jar" />
+    </item>
+    <item
+        jar="/home/fred/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-library/1.3/4785a3c21320980282f9f33d0d1264a69040538f/hamcrest-library-1.3.jar"
+        revision="25.0.1"
+        sha1="4785a3c21320980282f9f33d0d1264a69040538f">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/hamcrest-library-1.3-035b1c23193b592a519dd5413a1724e18f1f3d47.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-5b468309e19546a4608f06749ad8e6aeda903c3c.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
+        revision="25.0.1"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/debug/jars/8000/1f/classes-3eddd363ca2cad22644dad76c879fab5d2f338ba.jar" />
+    </item>
+    <item
+        jar="/home/fred/dev/SuperSudoku/app/build/intermediates/exploded-aar/com.android.support.test/rules/0.5/jars/classes.jar"
+        revision="25.0.1"
+        sha1="7e11799d8a26bfa5d48acafe012ee5545b9bf468">
+        <dex dex="/home/fred/dev/SuperSudoku/app/build/intermediates/transforms/preJackPackagedLibraries/androidTest/debug/jars/8000/1f/classes-aff84fb2dcef897af0dacaf9a84f509d80658580.jar" />
     </item>
 
 </items>

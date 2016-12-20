@@ -113,9 +113,7 @@ public class Board {
     /**
      * Called when a change to the board state by the user happens. Initiates the assistant task.
      */
-    public void changeOccurred() {
-        new AssistantTask().execute(this);
-    }
+    public void changeOccurred() { new AssistantTask().execute(this); }
 
     public void addEventListener(EventListener listener) {
         eventListeners.add(listener);

@@ -1,13 +1,18 @@
 package com.example.fredrik.supersudoku;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.example.fredrik.supersudoku.asdflaksd.Array;
@@ -30,24 +35,36 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
     float fillTextSize = 100;
 
     Paint paint = new Paint();
+    Canvas canvas;
+
+    final GestureDetector gestureDetector;
 
     SudokuMain sudokuMain;
     int[] squareColors;
+
+    SharedPreferences sharedPreferences;
 
     public SudokuSurfaceView(Context context) {
         super(context);
         sudokuMain = ((MainActivity) getContext()).sudokuMain;
         squareColors = new int[81];
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         this.setBackgroundColor(Color.WHITE);
         this.getHolder().setFixedSize(100, 850);
 
         sudokuMain.board.addEventListener(this);
+
+        gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            public void onLongPress(MotionEvent e) { onLongClick(e); }
+            public boolean onSingleTapConfirmed(MotionEvent e) { return onClick(e); }
+        });
     }
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        this.canvas = canvas;
 
         width = canvas.getWidth();
         height = canvas.getHeight();
@@ -55,25 +72,14 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         squareHeight = height / 9;
 
 
-        this.drawColoredSquares(canvas);
-        this.drawBoard(canvas);
-        this.drawFillsAndMarks(canvas);
+        this.drawColoredSquares();
+        this.drawBoard();
+        this.drawFillsAndMarks();
         sudokuMain.board.hint = null;
     }
 
-//    void drawHint(Hint hint) {
-//        // Highlight number
-//        sudokuMain.highlightNumber = hint.number;
-//
-//        this.drawSquareColors(canvas);
-//
-//        // Diff highlight container
-//
-//        // Redbox square
-//
-//    }
 
-    private void drawFillsAndMarks(Canvas canvas) {
+    private void drawFillsAndMarks() {
         int sx, sy, mx, my;
         for (Map.Entry<Integer, Square> entry : sudokuMain.board.squareMap.entrySet()) {
             Square square = entry.getValue();
@@ -104,7 +110,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         }
     }
 
-    private void drawBoard(Canvas canvas) {
+    private void drawBoard() {
         int startH, startV;
         paint.setColor(Color.BLACK);
         for (int i=0; i<=9; i++) {
@@ -121,7 +127,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         }
     }
 
-    private void drawColoredSquares(Canvas canvas) {
+    private void drawColoredSquares() {
         int highlight = sudokuMain.highlightNumber;
         if (sudokuMain.board.hint != null) {
             highlight = sudokuMain.board.hint.number;
@@ -129,19 +135,29 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
 
         int color;
         for (Map.Entry<Integer, Square> entry : sudokuMain.board.squareMap.entrySet()) {
-            Square square = entry.getValue();
-            if (highlight != 0 && square.fill == highlight ||
-                    (square.fill == 0 && Array.contains(square.candidates, highlight))) {
-                    // Number is highlighted
-                    color = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-            } else {
+            if (!drawHighlight(entry.getValue(), entry.getKey(), highlight)) {
                 color = getColor(squareColors[entry.getKey()]);
+                drawColoredSquare(entry.getKey(), color);
             }
-            drawColoredSquare(canvas, entry.getKey(), color);
         }
     }
 
-    private void drawColoredSquare(Canvas canvas, Integer key, int color) {
+    private boolean drawHighlight(Square square, Integer key, int highlight) {
+        if (MainActivity.sharedPreferences.getBoolean("highlights", true)) {
+            // Enabled in highlights
+            if (highlight != 0 && square.fill == highlight ||
+                    (square.fill == 0 && Array.contains(square.candidates, highlight)) &&
+                            squareColors[key] == 0) {
+                // Number is highlighted and not colored
+                int color = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+                drawColoredSquare(key, color);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void drawColoredSquare(Integer key, int color) {
         paint.setStyle(Paint.Style.FILL);
         int x = squareXPos(key);
         int y = squareYPos(key);
@@ -166,25 +182,26 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!this.isEnabled()) {
-            return true;
-        }
-        float touched_x = event.getX();
-        float touched_y = event.getY();
-        System.out.println(touched_x + ", " + touched_y);
+        gestureDetector.onTouchEvent(event);
+        return true;
+    }
 
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            int i = (int) touched_y / squareHeight;
-            int j = (int) touched_x / squareWidth;
-
-            if (event.getEventTime() - event.getDownTime() > ViewConfiguration.getLongPressTimeout()) {
-                selectColoring(i, j);
-            } else {
-                sudokuMain.setNumber(i, j);
-            }
+    public boolean onClick(MotionEvent e) {
+        if (isEnabled()) {
+            int i = (int) e.getY() / squareHeight;
+            int j = (int) e.getX() / squareWidth;
+            sudokuMain.setNumber(i, j);
+            invalidate();
         }
-        invalidate();
-        return true; // true = processed
+        return true;
+    }
+
+    public void onLongClick(MotionEvent e) {
+        if (isEnabled()) {
+            int i = (int) e.getY() / squareHeight;
+            int j = (int) e.getX() / squareWidth;
+            selectColoring(i, j);
+        }
     }
 
     private boolean selectColoring(int i, int j) {

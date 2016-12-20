@@ -12,7 +12,7 @@ import java.util.List;
  * Created by fredrik on 12.12.16.
  */
 
-public class HintTask extends AsyncTask<Board, Integer, Hint> {
+class HintTask extends AsyncTask<Board, Integer, Hint> {
 
     static int[] allNumbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
     private Board board;
@@ -20,7 +20,7 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
     @Override
     protected Hint doInBackground(Board... boards) {
         board = boards[0];
-        Hint hint = uniqueCandidate();
+        Hint hint = null;//uniqueCandidate();
         if (hint == null) {
            hint = removeSingleColumnRowCandidates();
         }
@@ -101,7 +101,7 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
                         if (type == ContainerType.BOX) continue;
                         if (rowColumnCandidates[type.ordinal()][candidate - 1] == null) {
                             rowColumnCandidates[type.ordinal()][candidate - 1] = key;
-                        } else {
+                        } else if (rowColumnCandidates[type.ordinal()][candidate - 1] != -1) {
                             if (!Board.containerIndex(rowColumnCandidates[type.ordinal()][candidate - 1], type).equals(Board.containerIndex(key, type))) {
                                 rowColumnCandidates[type.ordinal()][candidate - 1] = -1;
                             }
@@ -113,7 +113,7 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
         for (int i = 0; i < 9; i++) {
             for (ContainerType type : ContainerType.values()) {
                 if (type == ContainerType.BOX) continue;
-                if ((rowColumnCandidates[type.ordinal()][i] != null) && (rowColumnCandidates[type.ordinal()][i] != -1)) {
+                if (rowColumnCandidates[type.ordinal()][i] != null && rowColumnCandidates[type.ordinal()][i] != -1) {
                     // Found single row in box
                     // Check rest of row if candidate exists.
                     int candidate = i + 1;
@@ -122,7 +122,7 @@ public class HintTask extends AsyncTask<Board, Integer, Hint> {
 
                     for (Integer key : rowColumnContainer) {
                         Square square = board.squareMap.get(key);
-                        if (!Array.contains(rowColumnContainer, key)) {
+                        if (!Array.contains(container, key)) {
                             if (square.editable && square.fill == 0 &&  Array.contains(square.candidates, candidate)) {
                                 // Found hint
                                 return new BoxElimination(rowColumnContainer, candidate, key);

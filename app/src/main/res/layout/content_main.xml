@@ -24,15 +24,6 @@
             android:id="@+id/toggleLayout">
 
             <ToggleButton
-                android:text="Fill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/fillToggleButton"
-                android:layout_weight="1"
-                android:textOff="Fill"
-                android:textOn="Fill" />
-
-            <ToggleButton
                 android:text="Candidate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
