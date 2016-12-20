@@ -105,7 +105,7 @@ public class Board {
             System.out.println("-------");
 
             for (EventListener listener : eventListeners) {
-                listener.onHintFoundEvent(hint.number);
+                listener.onHintFoundEvent(hint);
             }
         }
     }

@@ -5,8 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.example.fredrik.supersudoku.asdflaksd.Array;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fredrik on 12.12.16.
@@ -20,9 +19,12 @@ class HintTask extends AsyncTask<Board, Integer, Hint> {
     @Override
     protected Hint doInBackground(Board... boards) {
         board = boards[0];
-        Hint hint = null;//uniqueCandidate();
+        Hint hint = singleCandidate();
         if (hint == null) {
-           hint = removeSingleColumnRowCandidates();
+           hint = uniqueCandidate();
+        }
+        if (hint == null) {
+            hint = removeSingleColumnRowCandidates();
         }
 //        if (hint == null) {
 //            hint = removeDoubleColumnRowCandidates();
@@ -35,7 +37,21 @@ class HintTask extends AsyncTask<Board, Integer, Hint> {
         board.hintTaskFinished(result);
     }
 
-    public Hint uniqueCandidate() {
+    @Nullable
+    private Hint singleCandidate() {
+        for (Map.Entry<Integer, Square> entry : board.squareMap.entrySet()) {
+            Square square = entry.getValue();
+            if (square.editable) {
+                if (square.candidates.length == 1 && square.fill == 0) {
+                    return new SingleCandidate(new Integer[]{}, square.candidates[0], entry.getKey());
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private Hint uniqueCandidate() {
         int[] numOfCandidates;
         Integer[] candidateKeys;
 
@@ -59,12 +75,8 @@ class HintTask extends AsyncTask<Board, Integer, Hint> {
             for (int i = 0; i < 9; i++) {
                 if (numOfCandidates[i] == 1) {
                     // Unique candidate found
-                    System.out.println("Found unique candidate! " + (i + 1) + ", key = " + candidateKeys[i]);
                     return new UniqueCandidate(container, i + 1, candidateKeys[i]);
                 }
-//                  else if (candidates.get(i) == 0) {
-//                    // Illegal board state!
-//                }
             }
         }
         return null;

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
 import com.example.fredrik.supersudoku.asdflaksd.EventListener;
+import com.example.fredrik.supersudoku.sudokulogic.Hint;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
 public class MainActivity extends AppCompatActivity
@@ -193,10 +194,11 @@ public class MainActivity extends AppCompatActivity
     public void onChangeEvent() {}
 
     @Override
-    public void onHintFoundEvent(int number) {
-        if (number != 0) {
-            numberToggleButtons[number - 1].setChecked(true);
+    public void onHintFoundEvent(Hint hint) {
+        if (hint.number != 0) {
+            numberToggleButtons[hint.number - 1].setChecked(true);
         }
+        candidateToggleButton.setChecked(hint.remove_candidate);
     }
 }
 
