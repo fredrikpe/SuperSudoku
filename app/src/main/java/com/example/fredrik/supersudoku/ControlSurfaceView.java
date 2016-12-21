@@ -66,7 +66,7 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
         this.canvas = canvas;
 
         width = canvas.getWidth();
-        squareWidth = width / 9;
+        squareWidth = width / 7;
 
         canvas.drawBitmap(tmpBitmap, 0, 0, tmpPaint);
 
@@ -78,7 +78,7 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
     private void drawNumberButtons() {
         paint.setTextSize(70);
         for (int i=1; i<=9; i++) {
-            Rect rect = getRect(i - 1, 0);
+            Rect rect = getRect((i - 1) % 3 + 2, (i - 1)/3);
             if (i == sudokuMain.selectedNumber) {
                 paint.setColor(ContextCompat.getColor(getContext(), R.color.colorSecondaryDark));
                 paint.setStyle(Paint.Style.FILL);
@@ -93,23 +93,23 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
         paint.setColor(Color.WHITE);
         paint.setTextSize(70);
 
-        drawCenteredText("↶", getRect(1, 1), paint, canvas);
+        drawCenteredText("↶", getRect(1, 0), paint, canvas);
 
         if (sudokuMain.markMode == MarkMode.CLEAR) {
             paint.setColor(ContextCompat.getColor(getContext(), R.color.colorSecondaryDark));
-            drawCenteredCircle(getRect(0, 1), paint, canvas);
+            drawCenteredCircle(getRect(1, 1), paint, canvas);
             paint.setColor(Color.WHITE);
         }
-        drawCenteredText("❌", getRect(0, 1), paint, canvas);
+        drawCenteredText("❌", getRect(1, 1), paint, canvas);
 
-        drawCenteredText("?", getRect(7, 1), paint, canvas);
+        drawCenteredText("?", getRect(5, 1), paint, canvas);
 
         if (sudokuMain.markMode == MarkMode.CANDIDATE) {
             paint.setColor(ContextCompat.getColor(getContext(), R.color.colorSecondaryDark));
-            drawCenteredCircle(getRect(8, 1), paint, canvas);
+            drawCenteredCircle(getRect(5, 0), paint, canvas);
             paint.setColor(Color.WHITE);
         }
-        drawCenteredText("✎", getRect(8, 1), paint, canvas);
+        drawCenteredText("✎", getRect(5, 0), paint, canvas);
     }
 
     @Override
@@ -121,15 +121,16 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
     public boolean onClick(MotionEvent e) {
         if (isEnabled()) {
             tmpCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            int j = (int) e.getY() / squareWidth;
-            int i = (int) e.getX() / squareWidth;
+            int i = (int) e.getY() / squareWidth;
+            int j = (int) e.getX() / squareWidth;
 
-            if (j == 0) {
+            if (j > 1 && j < 5) {
                 // Number pressed
-                sudokuMain.selectedNumber = sudokuMain.selectedNumber == i + 1 ? 0 : i + 1;
-            } else if (j == 1) {
+                int number = 3*i + j - 1;
+                sudokuMain.selectedNumber = sudokuMain.selectedNumber == number ? 0 : number;
+            } else if (j == 1 || j == 5) {
                 // Control clicked
-                onClickControl(i);
+                onClickControl(i, j);
             }
             invalidate();
             sudokuSurfaceView.invalidate();
@@ -137,21 +138,19 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
         return true;
     }
 
-    private void onClickControl(int i) {
-        switch (i) {
-            case 0:
-                sudokuMain.markMode = sudokuMain.markMode != MarkMode.CLEAR ? MarkMode.CLEAR : MarkMode.FILL;
-                break;
-            case 1:
+    private void onClickControl(int i, int j) {
+        if (j == 1) {
+            if (i == 0) {
                 sudokuMain.board.undo();
-                break;
-            case 7:
-                sudokuMain.board.hint();
-                break;
-            case 8:
+            } else if (i == 1) {
+                sudokuMain.markMode = sudokuMain.markMode != MarkMode.CLEAR ? MarkMode.CLEAR : MarkMode.FILL;
+            }
+        } else if (j == 5) {
+            if (i == 0) {
                 sudokuMain.markMode = sudokuMain.markMode != MarkMode.CANDIDATE ? MarkMode.CANDIDATE : MarkMode.FILL;
-                break;
-            default: break;
+            } else if (i == 1) {
+                sudokuMain.board.hint();
+            }
         }
     }
 
@@ -171,7 +170,7 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
     }
 
     private Rect getRect(int i, int j) {
-        return new Rect(i*squareWidth, 5 + j*squareWidth, (i + 1)*squareWidth, 5 + (j + 1)*squareWidth);
+        return new Rect(i*squareWidth, j*squareWidth, (i + 1)*squareWidth, (j + 1)*squareWidth);
     }
 
     static void drawCenteredText(String text, Rect areaRect, Paint mPaint, Canvas mCanvas) {
@@ -188,7 +187,8 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
     }
 
     static void drawCenteredCircle(Rect areaRect, Paint mPaint, Canvas mCanvas) {
-        mCanvas.drawCircle(areaRect.centerX(), areaRect.centerY(), areaRect.width()/2, mPaint);
+        RectF rectf = new RectF(areaRect);
+        mCanvas.drawRoundRect(rectf, 30, 30, mPaint);
     }
 
     @Override

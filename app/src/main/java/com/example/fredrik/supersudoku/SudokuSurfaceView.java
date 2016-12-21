@@ -246,11 +246,11 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
     private int backgroundColor(int i, int j) {
         if (i > 2 && i < 6) {
             if (j < 3 || j > 5) {
-                return darkenColor(Color.WHITE, 0.97);
+                return darkenColor(Color.WHITE, 0.95);
             }
         } else {
             if (j > 2 && j < 6) {
-                return darkenColor(Color.WHITE, 0.97);
+                return darkenColor(Color.WHITE, 0.95);
             }
         }
         return Color.WHITE;
