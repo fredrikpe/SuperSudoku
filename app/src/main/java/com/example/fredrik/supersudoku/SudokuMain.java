@@ -1,5 +1,6 @@
 package com.example.fredrik.supersudoku;
 
+import com.example.fredrik.supersudoku.asdflaksd.EventListener;
 import com.example.fredrik.supersudoku.sudokulogic.Board;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
@@ -17,10 +18,12 @@ class SudokuMain {
     Board board;
     MarkMode markMode = MarkMode.FILL;
     int selectedNumber;
-    int highlightNumber;
+
+    private List<EventListener> eventListeners;
 
     SudokuMain(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+        eventListeners = new ArrayList<>();
 
         board = new Board();
 

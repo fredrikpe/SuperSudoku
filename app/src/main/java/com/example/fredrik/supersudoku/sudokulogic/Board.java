@@ -107,6 +107,7 @@ public class Board {
             for (EventListener listener : eventListeners) {
                 listener.onHintFoundEvent(hint);
             }
+            hint = null;
         }
     }
 

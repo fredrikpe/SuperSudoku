@@ -29,23 +29,6 @@ public class MainActivity extends AppCompatActivity
     SudokuSurfaceView sudokuSurfaceView;
     ControlSurfaceView controlSurfaceView;
 
-    Button undoButton;
-    Button hintButton;
-
-    ToggleButton candidateToggleButton;
-    ToggleButton[] modeToggleButtons;
-
-    ToggleButton toggleButton1;
-    ToggleButton toggleButton2;
-    ToggleButton toggleButton3;
-    ToggleButton toggleButton4;
-    ToggleButton toggleButton5;
-    ToggleButton toggleButton6;
-    ToggleButton toggleButton7;
-    ToggleButton toggleButton8;
-    ToggleButton toggleButton9;
-    ToggleButton[] numberToggleButtons;
-
     SudokuMain sudokuMain;
     public static SharedPreferences sharedPreferences;
 
@@ -72,8 +55,8 @@ public class MainActivity extends AppCompatActivity
 
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
 
-        controlSurfaceView = new ControlSurfaceView(this);
         sudokuSurfaceView = new SudokuSurfaceView(this);
+        controlSurfaceView = new ControlSurfaceView(this, sudokuSurfaceView);
         mainLayout.addView(controlSurfaceView, 0);
         mainLayout.addView(sudokuSurfaceView, 0);
 

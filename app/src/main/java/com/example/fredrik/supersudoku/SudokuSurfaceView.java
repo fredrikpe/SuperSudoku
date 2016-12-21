@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +38,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
     final GestureDetector gestureDetector;
 
     SudokuMain sudokuMain;
+    Hint hint;
     int[] squareColors;
 
     SharedPreferences sharedPreferences;
@@ -76,7 +78,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         this.drawColoredSquares();
         this.drawBoard();
         this.drawFillsAndMarks();
-        sudokuMain.board.hint = null;
+        hint = null;
     }
 
 
@@ -96,9 +98,8 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
                     paint.setColor(color);
                 }
                 paint.setTextSize(fillTextSize);
-                sx = sx + squareWidth / 4;
-                sy = sy + squareHeight - 20;
-                canvas.drawText(Integer.toString(square.fill), sx, sy, paint);
+                ControlSurfaceView.drawCenteredText(Integer.toString(square.fill),
+                        new Rect(sx, sy, sx + squareWidth, sy + squareHeight), paint, canvas);
             } else {
                 paint.setColor(Color.BLACK);
                 paint.setTextSize(markTextSize);
@@ -129,23 +130,19 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
     }
 
     private void drawColoredSquares() {
-        int highlight = sudokuMain.highlightNumber;
-        if (sudokuMain.board.hint != null) {
-            highlight = sudokuMain.board.hint.number;
-        }
-
         int color;
         for (Map.Entry<Integer, Square> entry : sudokuMain.board.squareMap.entrySet()) {
-            if (!drawHighlight(entry.getValue(), entry.getKey(), highlight)) {
-                color = getColor(squareColors[entry.getKey()]);
+            if (!drawHighlight(entry.getValue(), entry.getKey())) {
+                color = getColor(entry.getKey());
                 drawColoredSquare(entry.getKey(), color);
             }
         }
     }
 
-    private boolean drawHighlight(Square square, Integer key, int highlight) {
+    private boolean drawHighlight(Square square, Integer key) {
         if (MainActivity.sharedPreferences.getBoolean("highlights", true)) {
             // Enabled in highlights
+            int highlight = sudokuMain.selectedNumber;
             if (highlight != 0 && square.fill == highlight ||
                     (square.fill == 0 && Array.contains(square.candidates, highlight)) &&
                             squareColors[key] == 0) {
@@ -163,16 +160,16 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         int x = squareXPos(key);
         int y = squareYPos(key);
 
-        if (sudokuMain.board.hint != null) {
-            if (Array.contains(sudokuMain.board.hint.container, key)) {
-                color = darkenColor(color);
+        if (hint != null) {
+            if (Array.contains(hint.container, key)) {
+                color = darkenColor(color, 0.8);
             }
         }
         paint.setColor(color);
         canvas.drawRect(x, y, x + squareWidth, y + squareHeight, paint);
 
-        if (sudokuMain.board.hint != null) {
-            if (key.equals(sudokuMain.board.hint.key)) {
+        if (hint != null) {
+            if (key.equals(hint.key)) {
                 paint.setStyle(Paint.Style.STROKE);
                 paint.setStrokeWidth(10);
                 paint.setColor(ContextCompat.getColor(getContext(), R.color.colorRedBox));
@@ -224,9 +221,10 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         return true;
     }
 
-    private int getColor(int i) {
+    private int getColor(Integer key) {
+        int i = squareColors[key];
         switch (i) {
-            case 0: return Color.WHITE;
+            case 0: return backgroundColor(Board.rowIndex(key), Board.columnIndex(key));
             case 1: return Color.RED;
             case 2: return Color.GREEN;
             case 3: return Color.YELLOW;
@@ -234,12 +232,24 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         return Color.WHITE;
     }
 
-    private int darkenColor(int color) {
+    private int backgroundColor(int i, int j) {
+        if (i > 2 && i < 6) {
+            if (j < 3 || j > 5) {
+                return darkenColor(Color.WHITE, 0.95);
+            }
+        } else {
+            if (j > 2 && j < 6) {
+                return darkenColor(Color.WHITE, 0.95);
+            }
+        }
+        return Color.WHITE;
+    }
+
+    static int darkenColor(int color, double scalar) {
         float r = (color & 0xFF0000) >> 16;
         float g = (color & 0xFF00) >> 8;
         float b = (color & 0xFF);
 
-        double scalar = 0.8;
         return Color.rgb((int)(r * scalar), (int)(g * scalar), (int)(b * scalar));
     }
 
@@ -250,6 +260,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
 
     @Override
     public void onHintFoundEvent(Hint hint) {
+        this.hint = hint;
         invalidate();
     }
 
