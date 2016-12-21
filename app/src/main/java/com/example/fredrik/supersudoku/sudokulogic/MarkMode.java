@@ -3,7 +3,8 @@ package com.example.fredrik.supersudoku.sudokulogic;
 public enum MarkMode {
     NONE,
     FILL,
-    CANDIDATE;
+    CANDIDATE,
+    CLEAR;
 
     public static MarkMode parseText(String text) {
         switch (text) {

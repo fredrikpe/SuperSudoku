@@ -74,6 +74,19 @@ public class Board {
 
     void setFillFromAssistant(Integer key, int fill) { setFill(key, fill, false); }
 
+    public void clearSquare(Integer key) {
+        Square square = squareMap.get(key);
+        int[] newUserRemovedCandidates = new int[square.candidates.length + square.userRemovedCandidates.length];
+        int i = 0;
+        for (int candidate : square.userRemovedCandidates) {
+            newUserRemovedCandidates[i++] = candidate;
+        }
+        for (int candidate : square.candidates) {
+            newUserRemovedCandidates[i++] = candidate;
+        }
+        makeMove(key, new Square(0, new int[] {}, newUserRemovedCandidates, true), true);
+    }
+
     public void undo() {
         if (userMoves.size() > 0) {
             Move move = moves.pop();

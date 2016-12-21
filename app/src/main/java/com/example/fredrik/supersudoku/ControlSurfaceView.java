@@ -96,6 +96,12 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
         paint.setTextSize(70);
 
         drawCenteredText("↶", getRect(1, 1), paint, canvas);
+
+        if (sudokuMain.markMode == MarkMode.CLEAR) {
+            paint.setColor(ContextCompat.getColor(getContext(), R.color.colorSecondaryDark));
+            drawCenteredCircle(getRect(0, 1), paint, canvas);
+            paint.setColor(Color.WHITE);
+        }
         drawCenteredText("❌", getRect(0, 1), paint, canvas);
 
         drawCenteredText("?", getRect(7, 1), paint, canvas);
@@ -135,7 +141,9 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
 
     private void onClickControl(int i) {
         switch (i) {
-            case 0: break;
+            case 0:
+                sudokuMain.markMode = sudokuMain.markMode != MarkMode.CLEAR ? MarkMode.CLEAR : MarkMode.FILL;
+                break;
             case 1:
                 sudokuMain.board.undo();
                 break;
@@ -143,7 +151,7 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
                 sudokuMain.board.hint();
                 break;
             case 8:
-                sudokuMain.markMode = sudokuMain.markMode == MarkMode.FILL ? MarkMode.CANDIDATE : MarkMode.FILL;
+                sudokuMain.markMode = sudokuMain.markMode != MarkMode.CANDIDATE ? MarkMode.CANDIDATE : MarkMode.FILL;
                 break;
             default: break;
         }

@@ -35,20 +35,23 @@ class SudokuMain {
     }
 
     void setNumber(int i, int j) {
-        if (selectedNumber != 0) {
-            switch (markMode) {
-                case NONE:
-                    break;
-                case FILL:
+        switch (markMode) {
+            case CLEAR:
+                board.clearSquare(Board.key(i, j));
+                break;
+            case FILL:
+                if (selectedNumber != 0) {
                     board.setFillFromUser(Board.key(i, j), selectedNumber);
-                    break;
-                case CANDIDATE:
+                }
+                break;
+            case CANDIDATE:
+                if (selectedNumber != 0) {
                     board.setCandidateFromUser(Board.key(i, j), selectedNumber);
-                    break;
-                default:
-            }
-            board.changeOccurred();
+                }
+                break;
+            default:
         }
+        board.changeOccurred();
     }
 
     void parseSudokuTxtFile() {
