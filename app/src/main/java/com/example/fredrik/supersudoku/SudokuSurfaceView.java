@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Shader;
+import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -78,6 +81,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         this.drawColoredSquares();
         this.drawBoard();
         this.drawFillsAndMarks();
+        this.drawBottomShadow();
         hint = null;
     }
 
@@ -178,6 +182,13 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         }
     }
 
+    private void drawBottomShadow() {
+        paint.setShader(new LinearGradient(0, getHeight() - 15, 0, getHeight(),
+                Color.TRANSPARENT, Color.parseColor("#D6D6D6"), Shader.TileMode.CLAMP));
+        canvas.drawRect(new Rect(0, getHeight() - 15, getWidth(), getHeight()), paint);
+        paint.setShader(null);
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
@@ -235,11 +246,11 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
     private int backgroundColor(int i, int j) {
         if (i > 2 && i < 6) {
             if (j < 3 || j > 5) {
-                return darkenColor(Color.WHITE, 0.95);
+                return darkenColor(Color.WHITE, 0.97);
             }
         } else {
             if (j > 2 && j < 6) {
-                return darkenColor(Color.WHITE, 0.95);
+                return darkenColor(Color.WHITE, 0.97);
             }
         }
         return Color.WHITE;

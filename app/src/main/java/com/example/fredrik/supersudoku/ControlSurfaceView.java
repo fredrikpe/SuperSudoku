@@ -51,8 +51,6 @@ public class ControlSurfaceView extends SurfaceView implements EventListener {
             public boolean onDown(MotionEvent e) { return onDownClick(e); }
 
         });
-
-        setElevation(100);
     }
 
     @Override

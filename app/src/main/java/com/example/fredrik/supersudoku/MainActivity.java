@@ -15,12 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ToggleButton;
-
-import com.example.fredrik.supersudoku.asdflaksd.EventListener;
-import com.example.fredrik.supersudoku.sudokulogic.Hint;
-import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +53,7 @@ public class MainActivity extends AppCompatActivity
 
         sudokuSurfaceView = new SudokuSurfaceView(this);
         controlSurfaceView = new ControlSurfaceView(this, sudokuSurfaceView);
+
         mainLayout.addView(controlSurfaceView, 0);
         mainLayout.addView(sudokuSurfaceView, 0);
 
