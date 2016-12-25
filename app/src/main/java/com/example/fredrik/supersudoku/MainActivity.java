@@ -4,26 +4,32 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.example.fredrik.supersudoku.asdflaksd.EventListener;
+import com.example.fredrik.supersudoku.asdflaksd.PadButton;
+import com.example.fredrik.supersudoku.sudokulogic.Hint;
+import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, EventListener {
+
+    List<PadButton> numberButtons;
 
     LinearLayout mainLayout;
     SudokuSurfaceView sudokuSurfaceView;
-    ControlSurfaceView controlSurfaceView;
 
     SudokuMain sudokuMain;
     public static SharedPreferences sharedPreferences;
@@ -35,14 +41,13 @@ public class MainActivity extends AppCompatActivity
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         sudokuMain = new SudokuMain(this);
+        sudokuMain.board.addEventListener(this);
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -52,12 +57,66 @@ public class MainActivity extends AppCompatActivity
         mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
 
         sudokuSurfaceView = new SudokuSurfaceView(this);
-        controlSurfaceView = new ControlSurfaceView(this, sudokuSurfaceView);
 
-        mainLayout.addView(controlSurfaceView, 0);
         mainLayout.addView(sudokuSurfaceView, 0);
 
+        init_buttons();
+        findViewById(R.id.button1).performClick();
+
         sudokuMain.newGame(3);
+    }
+
+    void init_buttons() {
+        int[] buttonIds = new int[]{R.id.button1, R.id.button2, R.id.button3, R.id.button4,
+                R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9};
+
+        numberButtons = new ArrayList<>();
+        for (int bId : buttonIds) {
+            PadButton button = (PadButton) findViewById(bId);
+            numberButtons.add(button);
+        }
+
+        for (PadButton button : numberButtons) {
+            button.setOnClickListener(view -> {
+                int num = Integer.parseInt(button.getText().toString());
+                sudokuMain.selectedNumber = sudokuMain.selectedNumber == num ? 0 : num;
+                if (sudokuMain.selectedNumber == num) {
+                    button.color = ContextCompat.getColor(this, R.color.colorSecondaryDark);
+                    //button.invalidate();
+                    for (PadButton b : numberButtons) {
+                        if (b == button) continue;
+                        b.color = ContextCompat.getColor(this, R.color.colorSecondary);
+                    }
+                } else {
+                    button.color = ContextCompat.getColor(this, R.color.colorSecondary);
+                }
+                sudokuSurfaceView.invalidate();
+            });
+        }
+
+        findViewById(R.id.hintButton).setOnClickListener(view -> sudokuMain.board.hint());
+        findViewById(R.id.undoButton).setOnClickListener(view -> sudokuMain.board.undo());
+        for (int bId : new int[] {R.id.clearButton, R.id.candidateButton}) {
+            PadButton button = (PadButton) findViewById(bId);
+            button.setOnClickListener(view -> {
+                MarkMode mode = MarkMode.CLEAR;
+                if (bId == R.id.candidateButton) {
+                    mode = MarkMode.CANDIDATE;
+                }
+
+                sudokuMain.markMode = sudokuMain.markMode == mode ? MarkMode.FILL : mode;
+                if (sudokuMain.markMode == mode) {
+                    button.color = ContextCompat.getColor(this, R.color.colorSecondaryDark);
+                    PadButton other = (PadButton) findViewById(R.id.candidateButton);
+                    if (bId == R.id.candidateButton) {
+                        other = (PadButton) findViewById(R.id.clearButton);
+                    }
+                    other.color = ContextCompat.getColor(this, R.color.colorSecondary);
+                } else {
+                    button.color = ContextCompat.getColor(this, R.color.colorSecondary);
+                }
+            });
+        }
     }
 
     @Override
@@ -118,6 +177,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onChangeEvent() {}
+
+    @Override
+    public void onHintFoundEvent(Hint hint) {
+        if (hint.number != 0) {
+            if (sudokuMain.selectedNumber != hint.number)
+                numberButtons.get(hint.number - 1).performClick();
+        }
     }
 }
 
