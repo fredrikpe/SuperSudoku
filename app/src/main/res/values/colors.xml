@@ -6,4 +6,5 @@
     <color name="colorSecondary">#adb9e3</color>
     <color name="colorSecondaryDark">#a379c9</color>
     <color name="colorRedBox">#ff0000</color>
+    <color name="colorPadBackground">#888888</color>
 </resources>

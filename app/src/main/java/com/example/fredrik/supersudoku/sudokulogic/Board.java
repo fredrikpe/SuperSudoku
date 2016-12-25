@@ -76,15 +76,17 @@ public class Board {
 
     public void clearSquare(Integer key) {
         Square square = squareMap.get(key);
-        int[] newUserRemovedCandidates = new int[square.candidates.length + square.userRemovedCandidates.length];
-        int i = 0;
-        for (int candidate : square.userRemovedCandidates) {
-            newUserRemovedCandidates[i++] = candidate;
+        if (square.editable) {
+            int[] newUserRemovedCandidates = new int[square.candidates.length + square.userRemovedCandidates.length];
+            int i = 0;
+            for (int candidate : square.userRemovedCandidates) {
+                newUserRemovedCandidates[i++] = candidate;
+            }
+            for (int candidate : square.candidates) {
+                newUserRemovedCandidates[i++] = candidate;
+            }
+            makeMove(key, new Square(0, new int[]{}, newUserRemovedCandidates, true), true);
         }
-        for (int candidate : square.candidates) {
-            newUserRemovedCandidates[i++] = candidate;
-        }
-        makeMove(key, new Square(0, new int[] {}, newUserRemovedCandidates, true), true);
     }
 
     public void undo() {
@@ -151,7 +153,11 @@ public class Board {
     private void setFill(Integer key, int fill, boolean fromUser) {
         Square square = squareMap.get(key);
         if (square.editable) {
-            makeMove(key, new Square(fill, square.candidates, square.userRemovedCandidates, true), fromUser);
+            if (square.fill != fill) {
+                makeMove(key, new Square(fill, square.candidates, square.userRemovedCandidates, true), fromUser);
+            } else {
+                makeMove(key, new Square(0, square.candidates, square.userRemovedCandidates, true), fromUser);
+            }
         }
     }
 

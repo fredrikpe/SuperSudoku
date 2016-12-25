@@ -81,7 +81,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
         this.drawColoredSquares();
         this.drawBoard();
         this.drawFillsAndMarks();
-        this.drawBottomShadow();
+//        this.drawBottomShadow();
         hint = null;
     }
 
