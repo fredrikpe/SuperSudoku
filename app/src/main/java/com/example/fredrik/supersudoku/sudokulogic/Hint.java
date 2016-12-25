@@ -13,7 +13,7 @@ public abstract class Hint {
         this.remove_candidate = rc;
     }
 
-    abstract String string();
+    public abstract String string();
 }
 
 class SingleCandidate extends Hint {
@@ -24,9 +24,10 @@ class SingleCandidate extends Hint {
     }
 
     @Override
-    String string() {
-        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) +
-                "). It has only " + number + " as a possible candidate.";
+    public String string() {
+        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) + ").\n" +
+                "It has only " + number + " as a possible candidate.\n" +
+                number + " can be filled in.";
     }
 }
 
@@ -38,10 +39,11 @@ class UniqueCandidate extends Hint {
     }
 
     @Override
-    String string() {
-        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) +
-                "). It is the only square in the grayed out container with " + number +
-                " as a possible candidate.";
+    public String string() {
+        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) + ").\n" +
+                "It is the only square in the grayed out container with " + number +
+                " as a possible candidate.\n" +
+                number + " can be filled in.";
     }
 }
 
@@ -54,10 +56,10 @@ class BoxElimination extends Hint {
     }
 
     @Override
-    String string() {
-        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) +
-                "). " + number + " can only be put in one row/column in a neighbouring box, so " +
-                " it can be removed as a candidate.";
+    public String string() {
+        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) + ").\n" +
+                number + " can only be put in one row/column in a neighbouring box,\n" +
+                "so it can be removed as a candidate.";
     }
 }
 
@@ -70,10 +72,10 @@ class BoxPairElimination extends Hint {
     }
 
     @Override
-    String string() {
-        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) +
-                "). " + number + " can only be put in two rows/columns in the neighbouring boxes, so " +
-                " it can be removed as a candidate in this box's corresponding rows/columns.";
+    public String string() {
+        return "Consider the square at (" + Board.rowIndex(key) + ", " + Board.columnIndex(key) + ").\n" +
+                number + " can only be put in two row/column in the neighbouring boxes,\n" +
+                "so it can be removed as a candidate in this box's corresponding rows/columns.";
     }
 }
 
@@ -88,12 +90,12 @@ class NakedSubset extends Hint {
     }
 
     @Override
-    String string() {
+    public String string() {
         String ss = "";
         for (int i : subset)
             ss += i + ", ";
 
-        return "Consider the grayed out container. The numbers " + ss + "are confined to exactly " +
+        return "Consider the grayed out container.\nThe numbers " + ss + "are confined to exactly " +
                 subset.length + " squares, so they can be removed as candidates from the " +
                 "remaining squares in the container.";
     }

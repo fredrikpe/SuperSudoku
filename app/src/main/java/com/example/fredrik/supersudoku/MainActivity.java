@@ -11,8 +11,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.fredrik.supersudoku.asdflaksd.EventListener;
@@ -24,7 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, EventListener {
+        implements NavigationView.OnNavigationItemSelectedListener, EventListener,
+        PopupMenu.OnMenuItemClickListener {
 
     List<PadButton> numberButtons;
 
@@ -117,27 +122,21 @@ public class MainActivity extends AppCompatActivity
                 }
             });
         }
+        findViewById(R.id.optionsButton).setOnClickListener(view -> optionsPopup(view));
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    public void optionsPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+
+        // This activity implements OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.main);
+        popup.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onMenuItemClick(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -156,8 +155,17 @@ public class MainActivity extends AppCompatActivity
             builder.show();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -188,6 +196,15 @@ public class MainActivity extends AppCompatActivity
             if (sudokuMain.selectedNumber != hint.number)
                 numberButtons.get(hint.number - 1).performClick();
         }
+        findViewById(R.id.padLayout).setVisibility(View.GONE);
+        findViewById(R.id.hintLayout).setVisibility(View.VISIBLE);
+        ((EditText) findViewById(R.id.hintEditText)).setText(hint.string());
+    }
+
+    public void onHintOkClick(View v) {
+        findViewById(R.id.padLayout).setVisibility(View.VISIBLE);
+        findViewById(R.id.hintLayout).setVisibility(View.GONE);
+
     }
 }
 
