@@ -197,6 +197,9 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
 
     public boolean onClick(MotionEvent e) {
         if (isEnabled()) {
+            // Default click sound
+            this.playSoundEffect(android.view.SoundEffectConstants.CLICK);
+
             int i = (int) e.getY() / squareHeight;
             int j = (int) e.getX() / squareWidth;
             sudokuMain.setNumber(i, j);

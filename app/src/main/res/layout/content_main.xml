@@ -11,7 +11,7 @@
     tools:context="com.example.fredrik.supersudoku.MainActivity">
 
     <LinearLayout
-        android:background="@color/colorPadBackground"
+        android:background="@color/colorSecondaryLight"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
