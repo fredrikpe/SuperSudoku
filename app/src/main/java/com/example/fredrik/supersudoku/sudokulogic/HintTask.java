@@ -3,7 +3,7 @@ package com.example.fredrik.supersudoku.sudokulogic;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
-import com.example.fredrik.supersudoku.asdflaksd.Array;
+import com.example.fredrik.supersudoku.customs.Array;
 
 import java.util.Map;
 
@@ -37,13 +37,22 @@ class HintTask extends AsyncTask<Board, Integer, Hint> {
         board.hintTaskFinished(result);
     }
 
+
     @Nullable
     private Hint singleCandidate() {
         for (Map.Entry<Integer, Square> entry : board.squareMap.entrySet()) {
             Square square = entry.getValue();
             if (square.editable) {
-                if (square.candidates.length == 1 && square.fill == 0) {
-                    return new SingleCandidate(new Integer[]{}, square.candidates[0], entry.getKey());
+                boolean[] validCandidates = AssistantTask.getValidCandidates(board, entry.getKey());
+                int c = 0, n = 0;
+                for (int i=0; i<validCandidates.length; i++) {
+                    if (validCandidates[i]) {
+                        c++;
+                        n = i + 1;
+                    }
+                }
+                if (c == 1) {
+                   return new SingleCandidate(new Integer[]{}, n, entry.getKey());
                 }
             }
         }

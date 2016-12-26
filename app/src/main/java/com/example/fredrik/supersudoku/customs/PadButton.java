@@ -1,4 +1,4 @@
-package com.example.fredrik.supersudoku.asdflaksd;
+package com.example.fredrik.supersudoku.customs;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.widget.Button;
 
-import com.example.fredrik.supersudoku.MainActivity;
 import com.example.fredrik.supersudoku.R;
 
 /**

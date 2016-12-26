@@ -7,8 +7,8 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -17,8 +17,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
-import com.example.fredrik.supersudoku.asdflaksd.Array;
-import com.example.fredrik.supersudoku.asdflaksd.EventListener;
+import com.example.fredrik.supersudoku.customs.Array;
+import com.example.fredrik.supersudoku.customs.EventListener;
 import com.example.fredrik.supersudoku.sudokulogic.Hint;
 import com.example.fredrik.supersudoku.sudokulogic.Square;
 import com.example.fredrik.supersudoku.sudokulogic.Board;
@@ -102,7 +102,7 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
                     paint.setColor(color);
                 }
                 paint.setTextSize(fillTextSize);
-                ControlSurfaceView.drawCenteredText(Integer.toString(square.fill),
+                drawCenteredText(Integer.toString(square.fill),
                         new Rect(sx, sy, sx + squareWidth, sy + squareHeight), paint, canvas);
             } else {
                 paint.setColor(Color.BLACK);
@@ -280,4 +280,22 @@ public class SudokuSurfaceView extends SurfaceView implements EventListener {
 
     private int squareYPos(Integer key) { return Board.rowIndex(key) * squareHeight; }
     private int squareXPos(Integer key) { return Board.columnIndex(key) * squareWidth; }
+
+    static void drawCenteredText(String text, Rect areaRect, Paint mPaint, Canvas mCanvas) {
+        RectF bounds = new RectF(areaRect);
+        // measure text width
+        bounds.right = mPaint.measureText(text, 0, text.length());
+        // measure text height
+        bounds.bottom = mPaint.descent() - mPaint.ascent();
+
+        bounds.left += (areaRect.width() - bounds.right) / 2.0f;
+        bounds.top += (areaRect.height() - bounds.bottom) / 2.0f;
+
+        mCanvas.drawText(text, bounds.left, bounds.top - mPaint.ascent(), mPaint);
+    }
+
+    static void drawCenteredCircle(Rect areaRect, Paint mPaint, Canvas mCanvas) {
+        RectF rectf = new RectF(areaRect);
+        mCanvas.drawRoundRect(rectf, 30, 30, mPaint);
+    }
 }

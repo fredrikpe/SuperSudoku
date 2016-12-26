@@ -1,4 +1,4 @@
-package com.example.fredrik.supersudoku.asdflaksd;
+package com.example.fredrik.supersudoku.customs;
 
 import com.example.fredrik.supersudoku.sudokulogic.Hint;
 

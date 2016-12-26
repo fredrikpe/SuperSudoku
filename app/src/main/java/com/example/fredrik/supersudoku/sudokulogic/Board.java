@@ -1,8 +1,8 @@
 package com.example.fredrik.supersudoku.sudokulogic;
 
 import com.example.fredrik.supersudoku.RNG;
-import com.example.fredrik.supersudoku.asdflaksd.Array;
-import com.example.fredrik.supersudoku.asdflaksd.EventListener;
+import com.example.fredrik.supersudoku.customs.Array;
+import com.example.fredrik.supersudoku.customs.EventListener;
 
 import java.util.ArrayList;
 import java.util.List;

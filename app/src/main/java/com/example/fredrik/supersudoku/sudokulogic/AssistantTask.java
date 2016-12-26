@@ -3,7 +3,7 @@ package com.example.fredrik.supersudoku.sudokulogic;
 import android.os.AsyncTask;
 
 import com.example.fredrik.supersudoku.MainActivity;
-import com.example.fredrik.supersudoku.asdflaksd.Array;
+import com.example.fredrik.supersudoku.customs.Array;
 
 import java.util.Map;
 
@@ -99,10 +99,9 @@ class AssistantTask extends AsyncTask<Board, Integer, Boolean> {
      * @param key           the key of the square
      * @return              a boolean list of possible candidates
      */
-    private boolean[] getValidCandidates(Board board, Integer key) {
+    static boolean[] getValidCandidates(Board board, Integer key) {
         boolean[] validCandidates = new boolean[] {true, true, true, true, true, true, true, true, true};
 
-        //if (board.getConnectedSquares(key).length != 24) System.out.println("CS != 24, CS = " + board.getConnectedSquares(key).length);
         for(Integer k : board.getConnectedSquares(key)) {
             if (!k.equals(key)) {
                 int fill = board.squareMap.get(k).fill;

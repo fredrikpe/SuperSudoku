@@ -12,15 +12,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.fredrik.supersudoku.asdflaksd.EventListener;
-import com.example.fredrik.supersudoku.asdflaksd.PadButton;
+import com.example.fredrik.supersudoku.customs.EventListener;
+import com.example.fredrik.supersudoku.customs.PadButton;
 import com.example.fredrik.supersudoku.sudokulogic.Hint;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 

@@ -1,4 +1,4 @@
-package com.example.fredrik.supersudoku.asdflaksd;
+package com.example.fredrik.supersudoku.customs;
 
 public class Array {
 

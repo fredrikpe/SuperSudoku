@@ -1,7 +1,5 @@
 package com.example.fredrik.supersudoku.sudokulogic;
 
-import com.example.fredrik.supersudoku.asdflaksd.Array;
-
 /**
  * Created by fredrik on 11.12.16.
  */

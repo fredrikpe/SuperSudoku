@@ -1,6 +1,6 @@
 package com.example.fredrik.supersudoku;
 
-import com.example.fredrik.supersudoku.asdflaksd.EventListener;
+import com.example.fredrik.supersudoku.customs.EventListener;
 import com.example.fredrik.supersudoku.sudokulogic.Board;
 import com.example.fredrik.supersudoku.sudokulogic.MarkMode;
 
