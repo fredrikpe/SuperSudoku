@@ -294,11 +294,6 @@ public class Board {
                 }
             }
         }
-        for (Integer[] pair : boxPairContainers) {
-            for (Integer key : pair) {
-                assert key != null;
-            }
-        }
         return boxPairContainers;
     }
 
