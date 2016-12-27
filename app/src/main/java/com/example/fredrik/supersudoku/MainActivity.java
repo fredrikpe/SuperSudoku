@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -26,8 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, EventListener,
-        PopupMenu.OnMenuItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, EventListener{
 
     List<PadButton> numberButtons;
 
@@ -120,40 +120,12 @@ public class MainActivity extends AppCompatActivity
                 }
             });
         }
-        findViewById(R.id.optionsButton).setOnClickListener(view -> optionsPopup(view));
+        findViewById(R.id.optionsButton).setOnClickListener(view -> openDrawer());
     }
 
-    public void optionsPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-
-        // This activity implements OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.main);
-        popup.show();
-    }
-
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        } else if (id == R.id.action_new_game) {
-            CharSequence colors[] = new CharSequence[] {"Super easy", "Very easy", "Easy", "Medium", "Hard"};
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Choose difficulty");
-            builder.setItems(colors, (dialog, which) -> sudokuMain.newGame(which));
-            builder.show();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void openDrawer(){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.openDrawer(Gravity.LEFT);
     }
 
     @Override
@@ -172,10 +144,18 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_new_game) {
             // Handle the camera action
-        } else if (id == R.id.nav_share) {
+            CharSequence colors[] = new CharSequence[] {"Super easy", "Very easy", "Easy", "Medium", "Hard"};
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choose difficulty");
+            builder.setItems(colors, (dialog, which) -> sudokuMain.newGame(which));
+            builder.show();
+        } else if (id == R.id.nav_import) {
+            // Import from camera
+        } else if (id == R.id.nav_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_send) {
 
         }
