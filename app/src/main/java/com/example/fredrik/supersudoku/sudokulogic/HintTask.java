@@ -42,7 +42,7 @@ class HintTask extends AsyncTask<Board, Integer, Hint> {
     private Hint singleCandidate() {
         for (Map.Entry<Integer, Square> entry : board.squareMap.entrySet()) {
             Square square = entry.getValue();
-            if (square.editable) {
+            if (square.editable && square.fill == 0) {
                 boolean[] validCandidates = AssistantTask.getValidCandidates(board, entry.getKey());
                 int c = 0, n = 0;
                 for (int i=0; i<validCandidates.length; i++) {
