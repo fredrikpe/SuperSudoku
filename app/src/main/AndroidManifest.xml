@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fredrik.supersudoku">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,8 +23,11 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="settings">
-        </activity>
+            android:label="settings" />
+        <activity
+            android:name=".cameraimport.CameraActivity"
+            android:label="cameraactivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

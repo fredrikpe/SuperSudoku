@@ -11,13 +11,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.fredrik.supersudoku.cameraimport.CameraActivity;
 import com.example.fredrik.supersudoku.customs.EventListener;
 import com.example.fredrik.supersudoku.customs.PadButton;
 import com.example.fredrik.supersudoku.sudokulogic.Hint;
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity
             builder.show();
         } else if (id == R.id.nav_import) {
             // Import from camera
+            startActivity(new Intent(this, CameraActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_send) {
